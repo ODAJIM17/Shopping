@@ -1,0 +1,34 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.btn-default {
+    color: #333;
+    background-color: #ffffff;
+    border-color: #ccc;
+}
+
+    .btn-default:hover {
+        color: #000;
+        background-color: #e8ebed;
+        border-color: #f9fafb;
+    }
+
+.text-navy {
+    color: navy;
+}
