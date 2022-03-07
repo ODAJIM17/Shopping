@@ -4,10 +4,84 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
 
- <partial name ="_CountryDetails"/>
-<div>
-    <a asp-action="Edit" class="btn btn-sm btn-primary" asp-route-id="@Model?.Id">Edit</a> 
-    <a asp-action="Index" class="btn btn-sm btn-success">Back to List</a>
+<div class="container-fluid">
+    <h4>Details</h4>
+    <partial name="_CountryDetails" />
+    <div>
+        <a asp-action="AddState" class="btn btn-sm btn-default" asp-route-id="@Model?.Id"><i class="fa-solid fa-plus-circle text-navy"></i> Add State</a>
+        <a asp-action="Edit" class="btn btn-sm btn-default" asp-route-id="@Model?.Id"><i class="fa-solid fa-sitemap text-navy"></i> Edit Country</a>
+        <a asp-action="Index" class="btn btn-sm btn-default"><i class="fa-solid fa-recycle text-navy"></i> Back to List</a>
+    </div>
 </div>
+
+
+<div class="container-fluid mt-2">
+    <div class="card border-primary">
+        <div class="card-header">
+            <i class="fas fa-map text-navy">  States List</i>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover table-striped" id="TableState">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.States.FirstOrDefault().Name)
+                        </th>
+                        <th class="text-center">
+                            @Html.DisplayNameFor(model => model.States.FirstOrDefault().CitiesCount)
+                        </th>
+                        <th> <a asp-action="Create" class="btn btn-sm btn-default"><i class="fa-solid fa-circle-plus text-danger"></i> Create New</a></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.States)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.CitiesCount)
+                            </td>
+                            <td>
+                                <a asp-action="EditState" asp-route-id="@item.Id" class="btn btn-sm btn-default"><i class="fa-solid fa-pen text-warning"></i> Edit</a>
+                                <a asp-action="DetailsState" asp-route-id="@item.Id" class="btn btn-sm btn-default"><i class="fa-solid fa-list text-primary"></i> Details</a>
+                                <a asp-action="DeleteState" asp-route-id="@item.Id" class="btn btn-sm btn-default"><i class="fa-solid fa-trash text-danger"></i> Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+    @* <script src="/js/deleteDialog.js"></script>*@
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#TableState').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/English.json"
+            },
+            "aLengthMenu": [
+                [25, 50, 100, 200, -1],
+                [25, 50, 100, 200, "All"]
+            ]
+        });
+
+        // Delete item
+       // sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Brands/Delete/', false);
+    });
+</script>
+
+    }

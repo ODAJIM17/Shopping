@@ -1,0 +1,26 @@
+﻿@model Shopping.ViewModels.StateViewModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<h4>State</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddState" autocomplete="off">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CountryId" />
+           <partial name="_State"/>
+            <div class="form-group mt-2">
+                <input type="submit" value="Create" class="btn btn-sm btn-default" />
+                <a asp-action="Details" asp-route-id="@Model.CountryId" class="btn btn-sm btn-default"><i class="fa-solid fa-recycle text-navy"></i> Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

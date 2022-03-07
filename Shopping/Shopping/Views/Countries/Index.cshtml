@@ -17,7 +17,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th> <a asp-action="Create" class="btn btn-sm btn-primary">Create New</a></th>
+             <th class="text-center">
+                @Html.DisplayNameFor(model => model.StatesCount)
+            </th>
+            <th> <a asp-action="Create" class="btn btn-sm btn-default"><i class="fa-solid fa-circle-plus text-danger"></i> Create New</a></th>
         </tr>
     </thead>
     <tbody>
@@ -26,10 +29,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.StatesCount) 
+            </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a> 
-                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Details</a> 
-                <a asp-action="Delete" asp-route-id="@item.Id"class="btn btn-sm btn-danger">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-default"><i class="fa-solid fa-pen text-warning"></i> Edit</a> 
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-default"><i class="fa-solid fa-list text-primary"></i> Details</a> 
+                <a asp-action="Delete" asp-route-id="@item.Id"class="btn btn-sm btn-default"><i class="fa-solid fa-trash text-danger"></i> Delete</a>
             </td>
         </tr>
 }

@@ -8,7 +8,7 @@
 <div class="container-fluid">
     <div class=card>
         <div class="card-header">
-            <i class="fas fa-plus text-navy">  Categories List</i>
+            <i class="fa-solid fa-list text-navy">  Categories List</i>
         </div>
          <div class="card-body">
              <table class="table table-hover table-striped" id="TableCategory">
@@ -17,7 +17,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th> <a asp-action="Create" class="btn btn-sm btn-primary">Create New</a></th>
+            <th> <a asp-action="Create" class="btn btn-sm btn-default"><i class="fa-solid fa-circle-plus text-danger"></i> Create New</a></th>
         </tr>
     </thead>
     <tbody>
@@ -27,9 +27,9 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a> 
-                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Details</a> 
-                <a asp-action="Delete" asp-route-id="@item.Id"class="btn btn-sm btn-danger">Delete</a>
+                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-default"><i class="fa-solid fa-pen text-warning"></i> Edit</a> 
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-default"><i class="fa-solid fa-list text-primary"></i> Details</a> 
+                <a asp-action="Delete" asp-route-id="@item.Id"class="btn btn-sm btn-default"><i class="fa-solid fa-trash-can text-danger"></i> Delete</a>
             </td>
         </tr>
 }
