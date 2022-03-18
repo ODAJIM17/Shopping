@@ -4,11 +4,12 @@
     ViewData["Title"] = "Details";
 }
 
-
+ 
 <div class="container-fluid">
     <h4>Details</h4>
     <partial name="_CountryDetails" />
-    <div>
+    <div>enter
+       
         <a asp-action="AddState" class="btn btn-sm btn-default" asp-route-id="@Model?.Id"><i class="fa-solid fa-plus-circle text-navy"></i> Add State</a>
         <a asp-action="Edit" class="btn btn-sm btn-default" asp-route-id="@Model?.Id"><i class="fa-solid fa-sitemap text-navy"></i> Edit Country</a>
         <a asp-action="Index" class="btn btn-sm btn-default"><i class="fa-solid fa-recycle text-navy"></i> Back to List</a>

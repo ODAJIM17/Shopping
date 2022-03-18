@@ -11,5 +11,7 @@ namespace Shopping.Data.Entities
         [Required(ErrorMessage = "Field {0} is required.")]
         public string Name { get; set; }
         public State State { get; set; }
+
+        public ICollection<User> Users { get; set; }
     }
 }
