@@ -22,7 +22,7 @@ namespace Shopping.Helpers
                 .OrderBy(c => c.Text)
                 .ToListAsync();
 
-            list.Insert(0, new SelectListItem { Text = "[Select category...", Value = "0" });
+            list.Insert(0, new SelectListItem { Text = "Select...", Value = "0" });
             return list;
         } 
 
@@ -39,7 +39,7 @@ namespace Shopping.Helpers
                .OrderBy(c => c.Text)
                .ToListAsync();
 
-            list.Insert(0, new SelectListItem { Text = "[Select city...", Value = "0" });
+            list.Insert(0, new SelectListItem { Text = "Select...", Value = "0" });
             return list;
         }
 
@@ -54,7 +54,7 @@ namespace Shopping.Helpers
                .OrderBy(c => c.Text)
                .ToListAsync();
 
-            list.Insert(0, new SelectListItem { Text = "[Select  country...", Value = "0" });
+            list.Insert(0, new SelectListItem { Text = "Select...", Value = "0" });
             return list;
         }
 
@@ -70,7 +70,7 @@ namespace Shopping.Helpers
                 .OrderBy(c => c.Text)
                 .ToListAsync();
 
-            list.Insert(0, new SelectListItem { Text = "[Select state...", Value = "0" });
+            list.Insert(0, new SelectListItem { Text = "Select...", Value = "0" });
             return list;
         }
     }

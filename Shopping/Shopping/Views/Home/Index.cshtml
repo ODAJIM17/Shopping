@@ -1,47 +1,33 @@
-﻿@{
+﻿@model IEnumerable<Shopping.Data.Entities.Category>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container-fluid bg-light text-center"> 
+  <img src="~/Images/Dinos3D2.png" height="180px" />
+  <p class="text-center text-danger">
+      <h3 class="text-navy">Your One Stop Shop Store</h3><br />
+  </p>
 </div>
-
-<div class="row row-cols-1 row-cols-md-3 g-4">
+  
+ <div class="row row-cols-1 row-cols-md-3 g-4 mt-3">
+      @foreach (var item in Model) {
   <div class="col">
     <div class="card h-100">
-      <img src="..." class="card-img-top" alt="...">
+      <img src="" class="card-img-top" alt="...">
       <div class="card-body">
-        <h5 class="card-title">Card title</h5>
+        <h5 class="card-title text-navy"> @Html.DisplayFor(modelItem => item.Name)</h5>
         <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
       </div>
-      <div class="card-footer">
-        <small class="text-muted">Last updated 3 mins ago</small>
+      <div class="card-footer text-center">
+          <a href="#" class="btn btn-sm btn-primary">View Details</a>
       </div>
     </div>
   </div>
-  <div class="col">
-    <div class="card h-100">
-      <img src="..." class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-      </div>
-      <div class="card-footer">
-        <small class="text-muted">Last updated 3 mins ago</small>
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="card h-100">
-      <img src="..." class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-      </div>
-      <div class="card-footer">
-        <small class="text-muted">Last updated 3 mins ago</small>
-      </div>
-    </div>
-  </div>
-</div>
+  }
+  </div> 
+  
+
+
+

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shopping.Data;
@@ -10,10 +11,12 @@ namespace Shopping.Controllers
     public class CategoriesController : Controller
     {
         private readonly DataContext _context;
+        private readonly INotyfService _notyf;
 
-        public CategoriesController(DataContext context)
+        public CategoriesController(DataContext context , INotyfService notyf)
         {
             _context = context;
+           _notyf = notyf;
         }
         public async Task<IActionResult> Index()
         {
@@ -109,6 +112,7 @@ namespace Shopping.Controllers
                 {
                     _context.Update(category);
                     await _context.SaveChangesAsync();
+                    _notyf.Success(category.Name + " updated successfuly",3);
                     return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateException dbUpdateException)
