@@ -45,7 +45,7 @@
             <partial name="_User" />
 
             <div class="form-group mt-2">
-                <input type="submit" value="Register" class="btn btn-outline-primary" />
+                <button type="submit" value="Register" class="btn btn-sm btn-default"><i class="fa fa-save fa-solid text-navy"></i> Register</button>
             </div>
         </form>
     </div>
@@ -63,9 +63,9 @@
             $("#CountryId").change(function () {
                 debugger;
                 $("#StateId").empty();
-                $("#StateId").append('<option value="0">[Select State...]</option>');
+                $("#StateId").append('<option value="0">Select...</option>');
                 $("#CityId").empty();
-                $("#CityId").append('<option value="0">[Select a city...]</option>');
+                $("#CityId").append('<option value="0">Select...</option>');
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Action("GetStates")',
@@ -86,7 +86,7 @@
             })
             $("#StateId").change(function () {
                 $("#CityId").empty();
-                $("#CityId").append('<option value="0">[Select a city...]</option>');
+                $("#CityId").append('<option value="0">Select...</option>');
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Action("GetCities")',

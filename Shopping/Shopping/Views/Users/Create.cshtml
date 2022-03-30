@@ -63,9 +63,9 @@
         $("#CountryId").change(function () {
             debugger;
             $("#StateId").empty();
-            $("#StateId").append('<option value="0">[Selecciona un departamento/estado...]</option>');
+            $("#StateId").append('<option value="0">Select...</option>');
             $("#CityId").empty();
-            $("#CityId").append('<option value="0">[Selecciona una ciudad...]</option>');
+            $("#CityId").append('<option value="0">Select...</option>');
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("GetStates")',
@@ -86,7 +86,7 @@
         })
         $("#StateId").change(function () {
             $("#CityId").empty();
-            $("#CityId").append('<option value="0">[Selecciona una ciudad...]</option>');
+            $("#CityId").append('<option value="0">Select...</option>');
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("GetCities")',

@@ -103,7 +103,7 @@ namespace Shopping.Helpers
                 model.Username,
                 model.Password,
                 model.RememberMe,
-                false);
+                true);
         }
 
         public async Task LogoutAsync()

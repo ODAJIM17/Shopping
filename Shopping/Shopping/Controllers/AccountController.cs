@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shopping.Data;
@@ -15,13 +16,15 @@ namespace Shopping.Controllers
         private readonly DataContext _context;
         private readonly ICombosHelper _combosHelper;
         private readonly IBlobHelper _blobHelper;
+        private readonly INotyfService _notyf;
 
-        public AccountController(IUserHelper userHelper, DataContext context, ICombosHelper combosHelper, IBlobHelper blobHelper)
+        public AccountController(IUserHelper userHelper, DataContext context, ICombosHelper combosHelper, IBlobHelper blobHelper, INotyfService notyf)
         {
             _userHelper = userHelper;
             _context = context;
             _combosHelper = combosHelper;
             _blobHelper = blobHelper;
+            _notyf = notyf;
         }
         public IActionResult Login()
         {
@@ -39,7 +42,7 @@ namespace Shopping.Controllers
         {
             if (ModelState.IsValid)
             {
-                Microsoft.AspNetCore.Identity.SignInResult result = await _userHelper.LoginAsync(model);
+               var result = await _userHelper.LoginAsync(model);
                 if (result.Succeeded)
                 {
                     if (Request.Query.Keys.Contains("ReturnUrl"))
@@ -50,7 +53,21 @@ namespace Shopping.Controllers
                     return RedirectToAction("Index", "Home");
                 }
 
-                ModelState.AddModelError(string.Empty, "Invalid email or password.");
+                if (result.IsLockedOut)
+                {
+                    _notyf.Error("Account Blocked! Too many tries.");
+                    ModelState.AddModelError(string.Empty, "You have tried to login with invalid credential. Try again in 5 minutes.");
+                }
+                else if (result.IsNotAllowed)
+                {
+                    ModelState.AddModelError(string.Empty, "Your email has not been confimed.Please check your email and follow the instructions");
+                }
+                else
+                {
+                    _notyf.Information("Invalid email or password",2);
+                    ModelState.AddModelError(string.Empty, "Invalid email or password.");
+                }
+
             }
 
             return View(model);
@@ -238,10 +255,10 @@ namespace Shopping.Controllers
                     return View(model);
                 }
 
-                User? user = await _userHelper.GetUserAsync(User.Identity.Name);
+               var user = await _userHelper.GetUserAsync(User.Identity.Name);
                 if (user != null)
                 {
-                    IdentityResult? result = await _userHelper.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+                    var result = await _userHelper.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
                     if (result.Succeeded)
                     {
                         return RedirectToAction("ChangeUser");

@@ -13,7 +13,7 @@ namespace Shopping.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string FirstName { get; set; }
 
-        [Display(Name = "Last Nmae")]
+        [Display(Name = "Last Name")]
         [MaxLength(50, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string LastName { get; set; }
@@ -26,7 +26,7 @@ namespace Shopping.Data.Entities
         [Display(Name = "Photo")]
         public Guid ImageId { get; set; }
 
-        //TODO: Pending to put the correct paths
+       
         [Display(Name = "Photo")]
         public string ImageFullPath => ImageId == Guid.Empty
             ? $"https://localhost:7270/images/noimage.png"

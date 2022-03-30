@@ -3,11 +3,13 @@
     ViewData["Title"] = "Edit";
 }
 
-<h2>Editar</h2>
-
-<h4>Usuario</h4>
-<hr />
-<div class="row">
+<div class="container-fluid">
+    <div class=card>
+        <h5 class=card-header>
+          <i class="fa fa-user text-navy"></i>  Edit User
+        </h5>
+        <div class=card-body>
+            <div class="row">
     <div class="col-md-8">
         <form asp-action="ChangeUser" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -20,15 +22,19 @@
             <partial name="_User" />
 
             <div class="form-group mt-2">
-                <input type="submit" value="Save" class="btn btn-outline-primary" />
-                <a asp-action="ChangePassword" class="btn btn-outline-secondary">Change Password</a>
+                <button type="submit" value="Save" class="btn btn-sm btn-default"><i class="fa fa-save"></i> Save</button>
+                <a asp-action="ChangePassword" class="btn btn-sm btn-default text-navy"><i class="fa fa-save text-navy"> </i> Change Password</a>
             </div>
         </form>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4 text-center">
         <img src="@Model.ImageFullPath" style="width:200px;height:200px;border-radius:50%" />
     </div>
 </div>
+        </div>
+    </div>
+</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
@@ -37,9 +43,9 @@
             $("#CountryId").change(function () {
                 debugger;
                 $("#StateId").empty();
-                $("#StateId").append('<option value="0">[Select State...]</option>');
+                $("#StateId").append('<option value="0">Select...</option>');
                 $("#CityId").empty();
-                $("#CityId").append('<option value="0">[Select a cit...]</option>');
+                $("#CityId").append('<option value="0">Select...</option>');
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Action("GetStates")',
@@ -60,7 +66,7 @@
             })
             $("#StateId").change(function () {
                 $("#CityId").empty();
-                $("#CityId").append('<option value="0">[Selecciona una ciudad...]</option>');
+                $("#CityId").append('<option value="0">Select...</option>');
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Action("GetCities")',
