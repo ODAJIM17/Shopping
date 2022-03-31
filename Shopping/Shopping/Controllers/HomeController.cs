@@ -29,7 +29,7 @@ namespace Shopping.Controllers
             //_notyf.Success("Record saved successfully", 3);
             //_notyf.Information("Info Notification", 5);
             //_notyf.Error("OOPS! Something went wrong.");
-            _notyf.Warning("This is a warning Notification",1);
+            //_notyf.Warning("This is a warning Notification",1);
             //_notyf.Custom("Custom Notification", 5, "whitesmoke", "fas fa-gear");
             //_notyf.Custom("Custom Notification", 5, "#B600FF", "fas fa-home");
             // return View();

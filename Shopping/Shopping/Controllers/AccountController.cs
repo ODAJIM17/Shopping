@@ -64,12 +64,14 @@ namespace Shopping.Controllers
                 }
                 else if (result.IsNotAllowed)
                 {
-                    _notyf.Warning("Email not confirmed", 2);
-                    ModelState.AddModelError(string.Empty, "The email address has not been verified. Upon registration an email was sent to you with instructions to verify your email address. Click here to resend the email.");
+                    _notyf.Warning("Email not confirmed", 3);
+                    ModelState.AddModelError(string.Empty, "The email address has not been verified." + 
+                        " Upon registration an email was sent to you with instructions to verify your email address. " + 
+                        " Click here  to resend the email confirmation.");
                 }
                 else
                 {
-                    _notyf.Information("Invalid email or password", 2);
+                    _notyf.Information("Invalid email or password", 3);
                     ModelState.AddModelError(string.Empty, "Invalid email or password.");
                 }
 
@@ -346,7 +348,7 @@ namespace Shopping.Controllers
                     $"Please click the link below to recover your password:" +
                     $"<p><a href = \"{link}\">Reset Password</a></p>");
 
-                _notyf.Information("Please check your email", 2);
+                _notyf.Information("Please check your email for instructions");
                 ViewBag.Message = "Instructions was sent to your email. Please check your email and follow the instructions";
                 return View();
             }

@@ -38,14 +38,14 @@
                         <th>
                             Phone
                         </th>
-                        <th>
+                        <th class="text-center">
                             @Html.DisplayNameFor(model => model.UserType)
                         </th>
                         <th>
                             Confirmed?
                         </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.ImageFullPath)
+                        <th class="text-center">
+                            @Html.DisplayNameFor(model => model.ImageFullPath )
                         </th>
                         <th>
                            
@@ -79,11 +79,19 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.PhoneNumber)
                             </td>
-                            <td>
+                            <td class="text-center">
                                 @Html.DisplayFor(modelItem => item.UserType)
                             </td>
-                             <td>
-                                @Html.DisplayFor(modelItem => item.EmailConfirmed)
+                             <td class="text-center">
+                                @if(item.EmailConfirmed == false)
+                                {
+                                    <span class="badge bg-danger">No</span>
+                                }
+                                else
+                                {
+                                   <span class="badge bg-success">Yes</span>
+                                }
+                              
                             </td>
                             <td>
                                 <img src="@item.ImageFullPath" style="width:70px; height:70px; border-radius:50px" />
@@ -103,7 +111,6 @@
 @section Scripts {
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
-}
 
 
 <script type="text/javascript">
@@ -121,4 +128,4 @@
 </script>
 }
 
-
+}

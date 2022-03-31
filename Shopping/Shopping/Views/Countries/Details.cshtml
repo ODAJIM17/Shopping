@@ -5,16 +5,17 @@
 }
 
  
-<div class="container-fluid">
-    <h4>Details</h4>
+<div class="container-fluid bg-light">
+   
     <partial name="_CountryDetails" />
-    <div>enter
+    </div>
+    <div>
        
         <a asp-action="AddState" class="btn btn-sm btn-default" asp-route-id="@Model?.Id"><i class="fa-solid fa-plus-circle text-navy"></i> Add State</a>
         <a asp-action="Edit" class="btn btn-sm btn-default" asp-route-id="@Model?.Id"><i class="fa-solid fa-sitemap text-navy"></i> Edit Country</a>
         <a asp-action="Index" class="btn btn-sm btn-default"><i class="fa-solid fa-recycle text-navy"></i> Back to List</a>
     </div>
-</div>
+
 
 
 <div class="container-fluid mt-2">
@@ -32,7 +33,7 @@
                         <th class="text-center">
                             @Html.DisplayNameFor(model => model.States.FirstOrDefault().CitiesCount)
                         </th>
-                        <th> <a asp-action="Create" class="btn btn-sm btn-default"><i class="fa-solid fa-circle-plus text-danger"></i> Create New</a></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,7 +47,7 @@
                                 @Html.DisplayFor(modelItem => item.CitiesCount)
                             </td>
                             <td>
-                                <a asp-action="EditState" asp-route-id="@item.Id" class="btn btn-sm btn-default"><i class="fa-solid fa-pen text-warning"></i> Edit</a>
+                                <a asp-action="EditState" asp-route-id="@item.Id" class="btn btn-sm btn-default"><i class="fa-solid fa-pen text-navy"></i> Edit</a>
                                 <a asp-action="DetailsState" asp-route-id="@item.Id" class="btn btn-sm btn-default"><i class="fa-solid fa-list text-primary"></i> Details</a>
                                 <a asp-action="DeleteState" asp-route-id="@item.Id" class="btn btn-sm btn-default"><i class="fa-solid fa-trash text-danger"></i> Delete</a>
                             </td>

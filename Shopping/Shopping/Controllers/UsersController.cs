@@ -71,8 +71,9 @@ namespace Shopping.Controllers
                 User user = await _userHelper.AddUserAsync(model);
                 if (user == null)
                 {
-                    _notyf.Information("Email already used", 2);
-                    ModelState.AddModelError(string.Empty, "This email has been already used.");
+                   
+                    ModelState.AddModelError(string.Empty, model.Username + " email has been already used.");
+                    _notyf.Information(model.Username + " already has been used");
                     model.Countries = await _combosHelper.GetComboCountriesAsync();
                     model.States = await _combosHelper.GetComboStatesAsync(model.CountryId);
                     model.Cities = await _combosHelper.GetComboCitiesAsync(model.StateId);
