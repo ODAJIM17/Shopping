@@ -36,10 +36,13 @@
                             @Html.DisplayNameFor(model => model.Address)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.PhoneNumber)
+                            Phone
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.UserType)
+                        </th>
+                        <th>
+                            Confirmed?
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.ImageFullPath)
@@ -78,6 +81,9 @@
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.UserType)
+                            </td>
+                             <td>
+                                @Html.DisplayFor(modelItem => item.EmailConfirmed)
                             </td>
                             <td>
                                 <img src="@item.ImageFullPath" style="width:70px; height:70px; border-radius:50px" />

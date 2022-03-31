@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Shopping.Common;
 using Shopping.Data;
 using Shopping.Data.Entities;
 using Shopping.Enums;
@@ -16,13 +18,18 @@ namespace Shopping.Controllers
         private readonly IUserHelper _userHelper;
         private readonly IBlobHelper _blobHelper;
         private readonly ICombosHelper _combosHelper;
+        private readonly INotyfService _notyf;
+        private readonly IMailHelper _mailHelper;
 
-        public UsersController(DataContext context, IUserHelper userHelper, IBlobHelper blobHelper, ICombosHelper combosHelper)
+        public UsersController(DataContext context, IUserHelper userHelper, 
+            IBlobHelper blobHelper, ICombosHelper combosHelper, INotyfService notyf, IMailHelper mailHelper)
         {
             _context = context;
             _userHelper = userHelper;
             _blobHelper = blobHelper;
             _combosHelper = combosHelper;
+            _notyf = notyf;
+            _mailHelper = mailHelper;
         }
         public async Task<IActionResult> Index()
         {
@@ -64,14 +71,36 @@ namespace Shopping.Controllers
                 User user = await _userHelper.AddUserAsync(model);
                 if (user == null)
                 {
-                    ModelState.AddModelError(string.Empty, "Este correo ya está siendo usado.");
+                    _notyf.Information("Email already used", 2);
+                    ModelState.AddModelError(string.Empty, "This email has been already used.");
                     model.Countries = await _combosHelper.GetComboCountriesAsync();
                     model.States = await _combosHelper.GetComboStatesAsync(model.CountryId);
                     model.Cities = await _combosHelper.GetComboCitiesAsync(model.StateId);
                     return View(model);
                 }
 
-                return RedirectToAction("Index", "Home");
+                string myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+                string tokenLink = Url.Action("ConfirmEmail", "Account", new
+                {
+                    userid = user.Id,
+                    token = myToken
+                }, protocol: HttpContext.Request.Scheme);
+
+                Response response = _mailHelper.SendMail(
+                    $"{model.FirstName} {model.LastName}",
+                    model.Username,
+                    "Shopping - Email Confirmation",
+                    $"<h3>Shopping - Email confirmation</h1>" +
+                        $"Thank you for registering with the Shopping Store. In order to receive notifications on your service request, activate your account by clickingthelinkbelow:, " +
+                        $"<hr/><br/><p><a href = \"{tokenLink}\">Confirm Email</a></p>");
+                if (response.IsSuccess)
+                {
+                    _notyf.Success("Please check your email", 3);
+                    ViewBag.Message = "Instuctions has been sent to the admin email account. Please check your email .";
+                    return View(model);
+                }
+
+                ModelState.AddModelError(string.Empty, response.Message);
             }
 
             model.Countries = await _combosHelper.GetComboCountriesAsync();

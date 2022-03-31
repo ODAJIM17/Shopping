@@ -23,7 +23,7 @@ namespace Shopping.ViewModels
         [Required(ErrorMessage = "{0} is required.")]
         public string Address { get; set; }
 
-        [Display(Name = "Teléfono")]
+        [Display(Name = "Phone")]
         [MaxLength(20, ErrorMessage = " {0} Max allowed {1} characters.")]
         [Required(ErrorMessage = "{0} is required.")]
         public string PhoneNumber { get; set; }
