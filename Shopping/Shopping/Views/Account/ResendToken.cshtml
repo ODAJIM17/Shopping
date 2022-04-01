@@ -1,0 +1,32 @@
+﻿@model Shopping.ViewModels.ResendTokenViewModel
+@{
+    ViewData["Title"] = "Resend Token";
+}
+
+<div class="container">
+    <div class="card">
+        <h5 class="card-header"><i class="fa-solid fa-mail text-navy"></i> Resend Confirmation Email</h5>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Username">Email</label>
+                            <input asp-for="Username" class="form-control" />
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mt-2">
+                            <button type="submit" class="btn btn-sm btn-default"><i class="fa-solid fa-envelope text-danger"></i> Confirm Email</button>
+                        </div>
+                    </form>
+                    <div class="text-success">
+                        <p>
+                            @ViewBag.Message
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

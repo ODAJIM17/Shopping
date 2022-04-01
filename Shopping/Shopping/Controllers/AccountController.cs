@@ -64,10 +64,14 @@ namespace Shopping.Controllers
                 }
                 else if (result.IsNotAllowed)
                 {
+                   
                     _notyf.Warning("Email not confirmed", 3);
-                    ModelState.AddModelError(string.Empty, "The email address has not been verified." + 
-                        " Upon registration an email was sent to you with instructions to verify your email address. " + 
+                    ModelState.AddModelError(string.Empty, "The email address has not been verified." +
+                        " Upon registration an email was sent to you with instructions to verify your email address. " +
                         " Click here  to resend the email confirmation.");
+
+                    return RedirectToAction("ResendToken", "Account");
+
                 }
                 else
                 {
@@ -81,6 +85,50 @@ namespace Shopping.Controllers
         }
 
 
+        public IActionResult ResendToken()
+        {
+           AddUserViewModel model = new AddUserViewModel(); 
+            
+            ViewBag.Message = "Our records indicates that your email account has not been verify. In order to login, please enter your email and click the send token button";
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResendToken(ResendTokenViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                //var user = new User();
+                User user = await _userHelper.GetUserAsync(model.Username);
+                string myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+                string tokenLink = Url.Action("ConfirmEmail", "Account", new
+                {
+                    userid = user.Id,
+                    token = myToken
+                }, protocol: HttpContext.Request.Scheme);
+
+                Response response = _mailHelper.SendMail(
+                    $"{model.FirstName} {model.LastName}",
+                    model.Username,
+                    "Shopping - Email Confirmation",
+                    $"<h3>Shopping - Email confirmation</h1>" +
+                        $"To confirm your email, please click the link:, " +
+                        $"<hr/><br/><p><a href = \"{tokenLink}\">Confirm Email</a></p>");
+                if (response.IsSuccess)
+                {
+                    
+                    ViewBag.Message = "Instuctions has been sent to your email account .";
+                    _notyf.Success("Please check your email");
+                    return View(model);
+                }
+
+                ModelState.AddModelError(string.Empty, response.Message);
+            }
+            return View(model);
+        }
+        
 
         public async Task<IActionResult> Logout()
         {
@@ -150,7 +198,7 @@ namespace Shopping.Controllers
                         $"<hr/><br/><p><a href = \"{tokenLink}\">Confirm Email</a></p>");
                 if (response.IsSuccess)
                 {
-                    _notyf.Success("Please check your email", 3);
+                    _notyf.Success("Please check your email", 4);
                     ViewBag.Message = "Instuctions has been sent to your email account .";
                     return View(model);
                 }
@@ -348,8 +396,9 @@ namespace Shopping.Controllers
                     $"Please click the link below to recover your password:" +
                     $"<p><a href = \"{link}\">Reset Password</a></p>");
 
-                _notyf.Information("Please check your email for instructions");
+               
                 ViewBag.Message = "Instructions was sent to your email. Please check your email and follow the instructions";
+                _notyf.Information("Please check your email for instructions");
                 return View();
             }
 

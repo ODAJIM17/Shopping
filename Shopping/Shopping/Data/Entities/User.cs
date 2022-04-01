@@ -9,18 +9,18 @@ namespace Shopping.Data.Entities
     {
 
         [Display(Name = "First Name")]
-        [MaxLength(50, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [MaxLength(50, ErrorMessage = "Field {0} allows max {1} characters")]
+        [Required(ErrorMessage = "{0} is required.")]
         public string FirstName { get; set; }
 
         [Display(Name = "Last Name")]
-        [MaxLength(50, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [MaxLength(50, ErrorMessage = "Field {0} allows max {1} characters")]
+        [Required(ErrorMessage = "{0} is required.")]
         public string LastName { get; set; }
 
         [Display(Name = "Address")]
-        [MaxLength(200, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [MaxLength(200, ErrorMessage = "Field {0} allows max {1} characters")]
+        [Required(ErrorMessage = "{0} is required.")]
         public string Address { get; set; }
 
         [Display(Name = "Photo")]
