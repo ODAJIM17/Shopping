@@ -100,8 +100,16 @@ namespace Shopping.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var user = new User();
+               
+                //first check if the user exists
                 User user = await _userHelper.GetUserAsync(model.Username);
+                if(user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Email not found. Please check your email and try again");
+                    _notyf.Information(model.Username + " Email not found");
+                    return View(model);
+
+                }
                 string myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
                 string tokenLink = Url.Action("ConfirmEmail", "Account", new
                 {
