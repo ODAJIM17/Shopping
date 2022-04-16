@@ -87,9 +87,9 @@ namespace Shopping.Controllers
 
         public IActionResult ResendToken()
         {
-           AddUserViewModel model = new AddUserViewModel(); 
+           // ResendTokenViewModel model = new(); 
             
-            ViewBag.Message = "Our records indicates that your email account has not been verify. In order to login, please enter your email and click the send token button";
+            ViewBag.Message = "Our records indicates that your email account has not been verified. In order to login, please enter your email and click the send token button";
             return View();
         }
 
@@ -387,7 +387,7 @@ namespace Shopping.Controllers
                 User user = await _userHelper.GetUserAsync(model.Email);
                 if (user == null)
                 {
-                    ModelState.AddModelError(string.Empty, "Email not found. Please check your email and try again");
+                    ModelState.AddModelError(string.Empty, "The user either does not exist or it is not confirmed.");
                     return View(model);
                 }
 

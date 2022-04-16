@@ -23,7 +23,7 @@ namespace Shopping.Controllers
         //For insrtucttion https://codewithmukesh.com/blog/toast-notifications-in-aspnet-core/#Install_the_Package
         public async Task<IActionResult> Index()
         {
-           
+
 
             //_notyf.Success("Welcome to the Shopping Application " + User.Identity.Name);
             //_notyf.Success("Record saved successfully", 3);
@@ -34,6 +34,7 @@ namespace Shopping.Controllers
             //_notyf.Custom("Custom Notification", 5, "#B600FF", "fas fa-home");
             // return View();
             return View(await _context.Categories.ToListAsync());
+           
         }
 
         public IActionResult Privacy()
