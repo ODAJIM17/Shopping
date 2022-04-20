@@ -198,7 +198,7 @@ namespace Shopping.Data
                 });
                 _context.Countries.Add(new Country
                 {
-                    Name = "Estados Unidos",
+                    Name = "United States",
                     States = new List<State>()
             {
                 new State()
@@ -273,7 +273,7 @@ namespace Shopping.Data
                 _context.Categories.Add(new Category { Name = "Beauty" });
                 _context.Categories.Add(new Category { Name = "Nutrition" });
                 _context.Categories.Add(new Category { Name = "Shoes" });
-                _context.Categories.Add(new Category { Name = "Spotrs" });
+                _context.Categories.Add(new Category { Name = "Sports" });
                 _context.Categories.Add(new Category { Name = "Pets" });
                 _context.Categories.Add(new Category { Name = "Apple" });
                 await _context.SaveChangesAsync();

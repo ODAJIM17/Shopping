@@ -2,7 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shopping.Data;
+using Shopping.Data.Entities;
+using Shopping.Helpers;
 using Shopping.Models;
+using Shopping.ViewModels;
 using System.Diagnostics;
 
 namespace Shopping.Controllers
@@ -12,34 +15,105 @@ namespace Shopping.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly INotyfService _notyf;
         private readonly DataContext _context;
+        private readonly IUserHelper _userHelper;
 
-        public HomeController(ILogger<HomeController> logger, INotyfService notyf, DataContext context)
+        public HomeController(ILogger<HomeController> logger, INotyfService notyf, DataContext context, IUserHelper userHelper)
         {
             _logger = logger;
-           _notyf = notyf;
-          _context = context;
+            _notyf = notyf;
+            _context = context;
+            _userHelper = userHelper;
         }
 
         //For insrtucttion https://codewithmukesh.com/blog/toast-notifications-in-aspnet-core/#Install_the_Package
         public async Task<IActionResult> Index()
         {
+            List<Product> products = await _context.Products
+         .Include(p => p.ProductImages)
+         .Include(p => p.ProductCategories)
+         .OrderBy(p => p.Description)
+         .ToListAsync();
+            List<ProductsHomeViewModel> productsHome = new() { new ProductsHomeViewModel() };
+            int i = 1;
+            foreach (Product product in products)
+            {
+                if (i == 1)
+                {
+                    productsHome.LastOrDefault().Product1 = product;
+                }
+                if (i == 2)
+                {
+                    productsHome.LastOrDefault().Product2 = product;
+                }
+                if (i == 3)
+                {
+                    productsHome.LastOrDefault().Product3 = product;
+                }
+                if (i == 4)
+                {
+                    productsHome.LastOrDefault().Product4 = product;
+                    productsHome.Add(new ProductsHomeViewModel());
+                    i = 0;
+                }
+                i++;
+            }
+
+            HomeViewModel model = new() { Products = productsHome };
+            User user = await _userHelper.GetUserAsync(User.Identity.Name);
+            if (user != null)
+            {
+                model.Quantity = await _context.TemporalSales
+                    .Where(ts => ts.User.Id == user.Id)
+                    .SumAsync(ts => ts.Quantity);
+            }
+
+            return View(model);
 
 
-            //_notyf.Success("Welcome to the Shopping Application " + User.Identity.Name);
-            //_notyf.Success("Record saved successfully", 3);
-            //_notyf.Information("Info Notification", 5);
-            //_notyf.Error("OOPS! Something went wrong.");
-            //_notyf.Warning("This is a warning Notification",1);
-            //_notyf.Custom("Custom Notification", 5, "whitesmoke", "fas fa-gear");
-            //_notyf.Custom("Custom Notification", 5, "#B600FF", "fas fa-home");
-            // return View();
-            return View(await _context.Categories.ToListAsync());
-           
+
         }
+
+
+        public async Task<IActionResult> Add(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            Product product = await _context.Products.FindAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            User user = await _userHelper.GetUserAsync(User.Identity.Name);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            TemporalSale temporalSale = new()
+            {
+                Product = product,
+                Quantity = 1,
+                User = user
+            };
+
+            _context.TemporalSales.Add(temporalSale);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
 
         public IActionResult Privacy()
         {
-         // var br =  HttpContext.Request.Browser.Browser;
+            // var br =  HttpContext.Request.Browser.Browser;
             return View();
         }
 
@@ -52,7 +126,7 @@ namespace Shopping.Controllers
         [Route("error/404")]
         public IActionResult Error404()
         {
-            _notyf.Error("OOps!. Page not found",3);
+            _notyf.Error("OOps!. Page not found", 3);
             return View();
         }
     }
