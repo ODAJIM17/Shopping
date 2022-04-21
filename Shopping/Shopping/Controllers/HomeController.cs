@@ -60,12 +60,16 @@ namespace Shopping.Controllers
 
             HomeViewModel model = new() { Products = productsHome };
             User user = await _userHelper.GetUserAsync(User.Identity.Name);
+
             if (user != null)
             {
                 model.Quantity = await _context.TemporalSales
                     .Where(ts => ts.User.Id == user.Id)
                     .SumAsync(ts => ts.Quantity);
             }
+
+            //Capture the qty
+            ViewBag.Cart = model.Quantity;
 
             return View(model);
 
