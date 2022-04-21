@@ -112,7 +112,7 @@ namespace Shopping.Controllers
 
             _context.TemporalSales.Add(temporalSale);
             await _context.SaveChangesAsync();
-            _notyf.Information("Your item has been added successfully " + temporalSale.Product.Name);
+            _notyf.Success(temporalSale.Product.Name + " has been added successfully");
             return RedirectToAction(nameof(Index));
         }
 
