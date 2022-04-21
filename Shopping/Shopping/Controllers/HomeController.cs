@@ -87,6 +87,7 @@ namespace Shopping.Controllers
 
             if (!User.Identity.IsAuthenticated)
             {
+                _notyf.Information("Please login to place an order.");
                 return RedirectToAction("Login", "Account");
             }
 
@@ -111,6 +112,7 @@ namespace Shopping.Controllers
 
             _context.TemporalSales.Add(temporalSale);
             await _context.SaveChangesAsync();
+            _notyf.Information("Your item has been added successfully " + temporalSale.Product.Name);
             return RedirectToAction(nameof(Index));
         }
 
