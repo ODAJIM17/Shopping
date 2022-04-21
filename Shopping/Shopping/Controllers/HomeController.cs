@@ -31,7 +31,7 @@ namespace Shopping.Controllers
             List<Product> products = await _context.Products
          .Include(p => p.ProductImages)
          .Include(p => p.ProductCategories)
-         .OrderBy(p => p.Description)
+         .OrderBy(p => p.Name)
          .ToListAsync();
             List<ProductsHomeViewModel> productsHome = new() { new ProductsHomeViewModel() };
             int i = 1;
