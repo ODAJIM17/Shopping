@@ -235,3 +235,19 @@ body {
     float: left;
     margin: 0 6px 0 0;
 }
+
+/*Zomm images*/
+.zoom {
+    padding: 5px;
+    background-color: transparent;
+    transition: transform .2s;
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+}
+
+    .zoom:hover {
+        -ms-transform: scale(1.5); /* IE 9 */
+        -webkit-transform: scale(1.5); /* Safari 3-8 */
+        transform: scale(1.5);
+    }

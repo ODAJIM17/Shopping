@@ -92,7 +92,7 @@ namespace Shopping.Controllers
                     model.Username,
                     "Shopping - Email Confirmation",
                     $"<h3>Shopping - Email confirmation</h1>" +
-                        $"Thank you for registering with the Shopping Store. In order to receive notifications on your service request, activate your account by clickingthelinkbelow:, " +
+                        $"Thank you for registering with the Shopping Store. In order to receive notifications on your service request, activate your account by clicking the linkbelow:, " +
                         $"<hr/><br/><p><a href = \"{tokenLink}\">Confirm Email</a></p>");
                 if (response.IsSuccess)
                 {

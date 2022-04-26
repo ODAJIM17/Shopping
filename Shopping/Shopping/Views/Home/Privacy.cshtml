@@ -5,22 +5,11 @@
 
 <p>Use this page to detail your site's privacy policy.</p>
 
-<p>
-    <label id="lblType">Type</label>
-    <label id="lblVersion">Ver</label>
-</p>
-
 @section Scripts {
-   
+
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-    <script type="text/javascript">
-        
-    $(document).ready(function() {
-    $("#lbltype").text(jQuery.uaMatch(navigator.userAgent).browser);
-    $("#lblVersion").text($.browser.version);
-    });
-</script>
+
 
 }
 

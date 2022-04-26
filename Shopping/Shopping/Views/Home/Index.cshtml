@@ -58,7 +58,11 @@
 }
   </style>
  
+  <style>
 
+
+
+</style>
 
   @if(Model.Quantity > 0)
 {
@@ -76,11 +80,13 @@
                 <div class="card h-100">
                     <div class="text-center">
                         <p> <h5 class="card-title text-navy"> @item.Product1.Name</h5></p>
+                        <div class="zoom">
                      <img src="@item.Product1.ImageFullPath" style="height:150px; max-width:150px;" />
+                     </div>
                      </div>
                     <div class="card-body">                
                         <p class="card-text">@item.Product1.Description</p>
-                         <h3>@Html.DisplayFor(modelItem => item.Product1.Price)</h3>
+                         <h5>@Html.DisplayFor(modelItem => item.Product1.Price)</h5>
                     </div>
                     <div class="card-footer text-center">
                        <a asp-action="Details" asp-route-id="@item.Product1.Id" class="btn btn-sm  btn-secondary">Details</a>
@@ -97,11 +103,13 @@
                 <div class="card h-100">
                     <div class="text-center">
                         <p> <h5 class="card-title text-navy"> @item.Product2.Name</h5></p>
+                        <div class="zoom">
                      <img src="@item.Product2.ImageFullPath" style="height:150px; max-width:150px;" />
+                     </div>
                      </div>
                     <div class="card-body">                
                         <p class="card-text">@item.Product2.Description</p>
-                         <h3>@Html.DisplayFor(modelItem => item.Product2.Price)</h3>
+                         <h5>@Html.DisplayFor(modelItem => item.Product2.Price)</h5>
                     </div>
                     <div class="card-footer text-center">
                        <a asp-action="Details" asp-route-id="@item.Product2.Id" class="btn btn-sm  btn-secondary">Details</a>
@@ -118,11 +126,13 @@
                 <div class="card h-100">
                     <div class="text-center">
                         <p> <h5 class="card-title text-navy"> @item.Product3.Name</h5></p>
+                        <div class="zoom">
                      <img src="@item.Product3.ImageFullPath" style="height:150px; max-width:150px;" />
                      </div>
+                     </div>
                     <div class="card-body">                
-                        <p class="card-text">@item.Product3.Description</p>
-                         <h3>@Html.DisplayFor(modelItem => item.Product3.Price)</h3>
+                        <p class="card-text">@item.Product3.Description</p>   
+                         <h5>@Html.DisplayFor(modelItem => item.Product3.Price)</h5>                         
                     </div>
                     <div class="card-footer text-center">
                        <a asp-action="Details" asp-route-id="@item.Product3.Id" class="btn btn-sm  btn-secondary">Details</a>
@@ -132,18 +142,20 @@
             </div>
             }
 
-               //product2 card
+               //product4 card
             @if (item.Product4 != null)
         {
             <div class="col">
                 <div class="card h-100">
                     <div class="text-center">
                         <p> <h5 class="card-title text-navy"> @item.Product4.Name</h5></p>
+                        <div class="zoom">
                      <img src="@item.Product4.ImageFullPath" style="height:150px; max-width:150px;" />
+                      </div>
                      </div>
                     <div class="card-body">                
                         <p class="card-text">@item.Product4.Description</p>
-                         <h3>@Html.DisplayFor(modelItem => item.Product4.Price)</h3>
+                         <h5>@Html.DisplayFor(modelItem => item.Product4.Price)</h5>
                     </div>
                     <div class="card-footer text-center">
                        <a asp-action="Details" asp-route-id="@item.Product4.Id" class="btn btn-sm  btn-secondary">Details</a>
@@ -154,8 +166,8 @@
             }
            
         }  
-  
-</div> 
+  </div>
+
 
 @*
 @foreach (var item in Model.Products)

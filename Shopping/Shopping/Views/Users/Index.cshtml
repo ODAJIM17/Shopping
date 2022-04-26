@@ -5,8 +5,8 @@
 }
 
 
-<div class="container-fluid">
-    <div class=card>
+<div class="container">
+    <div class="card">
         <h5 class="card-header">
             <i class="fa fa-users text-danger"> </i> Users 
               <a asp-action="Create" class="btn btn-sm btn-default offset-10"><i class="fa fa-plus-circle text-navy"></i> Admin</a>
@@ -109,13 +109,13 @@
 
 
 @section Scripts {
-    @{
-    await Html.RenderPartialAsync("_ValidationScriptsPartial");
-
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
 <script type="text/javascript">
     $(document).ready(function () {
+      
         $('#UserTable').DataTable({
+            responsive: true,
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/English.json"
             },
@@ -126,6 +126,6 @@
         });
     });
 </script>
-}
+
 
 }

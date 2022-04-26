@@ -17,7 +17,8 @@ namespace Shopping.Controllers
         private readonly DataContext _context;
         private readonly IUserHelper _userHelper;
 
-        public HomeController(ILogger<HomeController> logger, INotyfService notyf, DataContext context, IUserHelper userHelper)
+        public HomeController(ILogger<HomeController> logger, 
+            INotyfService notyf, DataContext context, IUserHelper userHelper)
         {
             _logger = logger;
             _notyf = notyf;
@@ -25,7 +26,7 @@ namespace Shopping.Controllers
             _userHelper = userHelper;
         }
 
-        //For insrtucttion https://codewithmukesh.com/blog/toast-notifications-in-aspnet-core/#Install_the_Package
+        // for insrtuctions about toast go to this link https://codewithmukesh.com/blog/toast-notifications-in-aspnet-core/#Install_the_Package
         public async Task<IActionResult> Index()
         {
             List<Product> products = await _context.Products

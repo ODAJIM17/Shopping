@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Shopping.Data;
 using Shopping.Data.Entities;
 using Shopping.ViewModels;
+using System.Linq;
 
 namespace Shopping.Helpers
 {
@@ -83,6 +84,7 @@ namespace Shopping.Helpers
                 .FirstOrDefaultAsync(u => u.Email == email);
         }
 
+       
         public async Task<User> GetUserAsync(Guid userId)
         {
             return await _context.Users
@@ -135,5 +137,7 @@ namespace Shopping.Helpers
         {
             return await _userManager.ResetPasswordAsync(user, token, password);
         }
+
+       
     }
 }
