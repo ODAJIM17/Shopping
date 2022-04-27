@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Shopping.Common;
 using Shopping.Data;
 using Shopping.Data.Entities;
 using Shopping.Helpers;
@@ -17,14 +18,19 @@ namespace Shopping.Controllers
         private readonly INotyfService _notyf;
         private readonly DataContext _context;
         private readonly IUserHelper _userHelper;
+        private readonly IOrdersHelper _ordersHelper;
 
         public HomeController(ILogger<HomeController> logger, 
-            INotyfService notyf, DataContext context, IUserHelper userHelper)
+            INotyfService notyf, 
+            DataContext context, 
+            IUserHelper userHelper, 
+            IOrdersHelper ordersHelper)
         {
             _logger = logger;
             _notyf = notyf;
             _context = context;
             _userHelper = userHelper;
+            _ordersHelper = ordersHelper;
         }
 
         // for insrtuctions about toast go to this link https://codewithmukesh.com/blog/toast-notifications-in-aspnet-core/#Install_the_Package
@@ -193,7 +199,32 @@ namespace Shopping.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ShowCart(ShowCartViewModel model)
+        {
+            User user = await _userHelper.GetUserAsync(User.Identity.Name);
+            if (user == null)
+            {
+                return NotFound();
+            }
 
+            model.User = user;
+            model.TemporalSales = await _context.TemporalSales
+                .Include(ts => ts.Product)
+                .ThenInclude(p => p.ProductImages)
+                .Where(ts => ts.User.Id == user.Id)
+                .ToListAsync();
+
+            Response response = await _ordersHelper.ProcessOrderAsync(model);
+            if (response.IsSuccess)
+            {
+                return RedirectToAction(nameof(OrderSuccess));
+            }
+
+            ModelState.AddModelError(string.Empty, response.Message);
+            return View(model);
+        }
 
         public async Task<IActionResult> DecreaseQuantity(int? id)
         {
@@ -309,6 +340,13 @@ namespace Shopping.Controllers
             }
 
             return View(model);
+        }
+
+
+        [Authorize]
+        public IActionResult OrderSuccess()
+        {
+            return View();
         }
 
         public IActionResult Privacy()
