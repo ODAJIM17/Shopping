@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-     <meta name="description" content="" />
-     <meta name="keywords" content="" />
-     <meta name="robots" content="noindex,nofollow">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="robots" content="noindex,nofollow">
     <title>@ViewData["Title"] - Shopping</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
-     <link rel="stylesheet" href="~/lib/datatables/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="~/lib/datatables/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Shopping.styles.css" asp-append-version="true" />
 </head>
@@ -29,53 +29,53 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        
+
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                         @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {
                             <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop Menu</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Dashboard" asp-action="Index"><i class="fa fa-tachometer-alt text-danger"></i> Dashboard</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                               <li><a class="dropdown-item" asp-area="" asp-controller="Categories" asp-action="Index"><i class="fa fa-list-1-2 text-danger"></i> Categories</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Countries" asp-action="Index"><i class="fa fa-earth-americas text-danger"></i> Countries</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Users" asp-action="Index"><i class="fa fa-users text-danger"></i> Users</a></li> 
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Products" asp-action="Index"><i class="fa fa-gifts text-danger"></i> Products</a></li>
+                                <a class="nav-link dropdown-toggle text-white" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop Menu</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-                            </ul>
-                        </li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Dashboard" asp-action="Index"><i class="fa fa-tachometer-alt text-danger"></i> Dashboard</a></li>
+                                    <li><hr class="dropdown-divider" /></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Categories" asp-action="Index"><i class="fa fa-list-1-2 text-danger"></i> Categories</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Countries" asp-action="Index"><i class="fa fa-earth-americas text-danger"></i> Countries</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Users" asp-action="Index"><i class="fa fa-users text-danger"></i> Users</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Products" asp-action="Index"><i class="fa fa-gifts text-danger"></i> Products</a></li>
 
-                           @* <li class="nav-item">
+                                </ul>
+                            </li>
+
+                            @* <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-controller="Categories" asp-action="Index">Categories</a>
-                            </li>
-                            <li class="nav-item">
+                                </li>
+                                <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-controller="Countries" asp-action="Index">Countries</a>
-                            </li>
-                             <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
-                            </li>
-                             <li class="nav-item">
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+                                </li>
+                                <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
-                            </li>
-                             <li class="nav-item">
+                                </li>
+                                <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-controller="Products" asp-action="Index">Products</a>
-                            </li>*@
+                                </li>*@
                         }
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         @if (User.Identity.IsAuthenticated)
-                        {     
-                            @if(ViewBag.Cart > 0)
+                        {
+                            @if (ViewBag.Cart > 0)
                             {
                                 <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="ShowCart"><i class="fa fa-cart-shopping"></i> Cart <span class="badge bg-warning">@ViewBag.Cart</span></a>
-                            </li>
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="ShowCart"><i class="fa fa-cart-shopping"></i> Cart <span class="badge bg-warning">@ViewBag.Cart</span></a>
+                                </li>
                             }
-                           
+
 
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="ChangeUser">@User.Identity.Name</a>
@@ -97,23 +97,24 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
-               <partial name="_BusyIndicatorPartial" />
+            <partial name="_BusyIndicatorPartial" />
             @RenderBody()
         </main>
     </div>
 
-   @* <footer class="border-top footer text-muted">
+     <footer class="border-top footer text-muted smfnt">
         <div class="container">
-            &copy; @DateTime.Now.Year  - Shopping - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        &copy; @DateTime.Now.Year  - Shopping - Store <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>*@
+        </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jasny/jasny-bootstrap.min.js" type="text/javascript"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-     <script src="~/lib/font-awesome/js/fontawesome.js"></script>
-     <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> 
     <script src="~/js/site.js" asp-append-version="true"></script>
-    
+     <script src="~/lib/font-awesome/js/fontawesome.js"></script>
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+
     <script>
         function displayBusyIndicator() {
             $('.loading').show();
@@ -125,11 +126,12 @@
             displayBusyIndicator();
         });
     </script>
-    <script>
-            $(document).on('submit', 'form', function () {
-                displayBusyIndicator();
-            })
-        </script>
+    @*<script>
+        $(document).on('submit', 'form', function () {
+            displayBusyIndicator();
+        })
+    </script>*@
+
     @await Component.InvokeAsync("Notyf")
     @await RenderSectionAsync("Scripts", required: false)
 </body>

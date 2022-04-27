@@ -17,6 +17,14 @@ body {
   margin-bottom: 60px;
 }
 
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+}
+
 .btn-default {
     color: #333;
     background-color: #ffffff;
@@ -265,3 +273,16 @@ body {
         -webkit-transform: scale(1.5); /* Safari 3-8 */
         transform: scale(1.5);
     }
+
+/* Carousel */
+.carousel-inner {
+    width: auto;
+    height: 500px;
+    max-height: 500px !important;
+}
+
+.carousel-content {
+    color: black;
+    display: flex;
+    text-align: center;
+}

@@ -8,13 +8,13 @@ namespace Shopping.ViewModels
         public int Id { get; set; }
 
         [Display(Name = "Name")]
-        [MaxLength(50, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
+        [MaxLength(50, ErrorMessage = "{0} Allows max {1} characters.")]
         [Required(ErrorMessage = "{0} is required.")]
         public string Name { get; set; }
 
         [DataType(DataType.MultilineText)]
         [Display(Name = "Description")]
-        [MaxLength(500, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
+        [MaxLength(500, ErrorMessage = "{0} Allows max {1} characters.")]
         public string Description { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:C2}")]

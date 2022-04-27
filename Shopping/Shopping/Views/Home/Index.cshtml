@@ -9,209 +9,46 @@
     <h4 class="text-navy text-center">Your One Stop Shop Store</h4><br />
 </div>
 
-
 @if (Model.Quantity > 0)
 {
     <a asp-action="ShowCart" class="btn btn-outline-danger" style="border-radius:15px">Check Cart (@Model.Quantity)</a>
 }
 
-
 <div class="row row-cols-1 row-cols-md-4 g-4 mt-3">
 
-    @foreach (var item in Model.Products)
+   @if (Model.Products.Count() > 0)
     {
-        @if (item.Product1 != null)
+        @foreach (var item in Model.Products)
         {
-            <div class="col">
+           <div class="col">
                 <div class="cardShop h-100">
                     <div class="text-center">
-                        <p> <h5 class="card-title text-navy"> @item.Product1.Name</h5></p>
+                        <p> <h5 class="card-title text-navy"> @item.Name</h5></p>
                         <div class="zoom">
-                            <img src="@item.Product1.ImageFullPath" style="height:150px; max-width:150px;" />
+                            <img src="@item.ImageFullPath" style="height:150px; max-width:150px;" />
                         </div>
                     </div>
                     <div class="card-body">
-                        <p class="card-text">@item.Product1.Description</p>
-                        <h5>@Html.DisplayFor(modelItem => item.Product1.Price)</h5>
+                        <p class="card-text">@item.Description</p>
+                        <h5>@Html.DisplayFor(modelItem => item.Price)</h5>
                     </div>
                     <div class="card-footer text-center">
-                        <a asp-action="Details" asp-route-id="@item.Product1.Id" class="btn btn-sm  btn-secondary">Details</a>
-                        <a asp-action="Add" asp-route-id="@item.Product1.Id" class="btn btn-sm  btn-primary">Add to Cart</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm  btn-secondary">Details</a>
+                        <a asp-action="Add" asp-route-id="@item.Id" class="btn btn-sm  btn-primary">Add to Cart</a>
                     </div>
                 </div>
             </div>
         }
-
-        //product2 card
-        @if (item.Product2 != null)
-        {
-            <div class="col">
-                <div class="cardShop h-100">
-                    <div class="text-center">
-                        <p> <h5 class="card-title text-navy"> @item.Product2.Name</h5></p>
-                        <div class="zoom">
-                            <img src="@item.Product2.ImageFullPath" style="height:150px; max-width:150px;" />
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">@item.Product2.Description</p>
-                        <h5>@Html.DisplayFor(modelItem => item.Product2.Price)</h5>
-                    </div>
-                    <div class="card-footer text-center">
-                        <a asp-action="Details" asp-route-id="@item.Product2.Id" class="btn btn-sm  btn-secondary">Details</a>
-                        <a asp-action="Add" asp-route-id="@item.Product2.Id" class="btn btn-sm  btn-primary">Add to Cart</a>
-                    </div>
-                </div>
-            </div>
-        }
-
-        //product3 card
-        @if (item.Product3 != null)
-        {
-            <div class="col">
-                <div class="cardShop h-100">
-                    <div class="text-center">
-                        <p> <h5 class="card-title text-navy"> @item.Product3.Name</h5></p>
-                        <div class="zoom">
-                            <img src="@item.Product3.ImageFullPath" style="height:150px; max-width:150px;" />
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">@item.Product3.Description</p>
-                        <h5>@Html.DisplayFor(modelItem => item.Product3.Price)</h5>
-                    </div>
-                    <div class="card-footer text-center">
-                        <a asp-action="Details" asp-route-id="@item.Product3.Id" class="btn btn-sm  btn-secondary">Details</a>
-                        <a asp-action="Add" asp-route-id="@item.Product3.Id" class="btn btn-sm  btn-primary">Add to Cart</a>
-                    </div>
-                </div>
-            </div>
-        }
-
-        //product4 card
-        @if (item.Product4 != null)
-        {
-            <div class="col">
-                <div class="cardShop h-100">
-                    <div class="text-center">
-                        <p> <h5 class="card-title text-navy"> @item.Product4.Name</h5></p>
-                        <div class="zoom">
-                            <img src="@item.Product4.ImageFullPath" style="height:150px; max-width:150px;" />
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">@item.Product4.Description</p>
-                        <h5>@Html.DisplayFor(modelItem => item.Product4.Price)</h5>
-                    </div>
-                    <div class="card-footer text-center">
-                        <a asp-action="Details" asp-route-id="@item.Product4.Id" class="btn btn-sm  btn-secondary">Details</a>
-                        <a asp-action="Add" asp-route-id="@item.Product4.Id" class="btn btn-sm  btn-primary">Add to Cart</a>
-                    </div>
-                </div>
-            </div>
-        }
+    }
+    else
+    {
+        <h3>No products found with your search</h3>
     }
 </div>
-
-
-@*
-    @foreach (var item in Model.Products)
-    {
-    <div class="row">
-    @if (item.Product1 != null)
-    {
-    <div class="col-md-3">
-    <div class="card">
-    <div class="card_title"><h5> @item.Product1.Name</h5></div>
-    <div class="card_body">
-    <div class="text-center">
-    <img src="@item.Product1.ImageFullPath" style="height:150px; max-width:250px;" />
-    </div>
-    <p class="mt-2">
-    @item.Product1.Description
-    <h3>@Html.DisplayFor(modelItem => item.Product1.Price)</h3>
-    </p>
-    </div>
-    <div class="card_foot">
-    <a asp-action="Details" asp-route-id="@item.Product1.Id" class="btn btn-sm  btn-secondary">Details</a>
-    <a asp-action="Add" asp-route-id="@item.Product1.Id" class="btn btn-sm  btn-primary">Add to Cart</a>
-    </div>
-    </div>
-    </div>
-    }
-    @if (item.Product2 != null)
-    {
-    <div class="col-md-3">
-    <div class="card">
-    <div class="card_title"><h5> @item.Product2.Name</h5></div>
-    <div class="card_body">
-    <div class="text-center">
-    <img src="@item.Product2.ImageFullPath" style="height:150px; max-width:250px;" />
-    </div>
-    <p class="mt-2">
-    @item.Product2.Description
-    <h3>@Html.DisplayFor(modelItem => item.Product2.Price)</h3>
-    </p>
-    </div>
-    <div class="card_foot">
-    <a asp-action="Details" asp-route-id="@item.Product2.Id" class="btn btn-sm btn-secondary">Details</a>
-    <a asp-action="Add" asp-route-id="@item.Product2.Id" class="btn btn-sm btn-primary">Add to Cart</a>
-    </div>
-    </div>
-    </div>
-    }
-    @if (item.Product3 != null)
-    {
-    <div class="col-md-3">
-    <div class="card">
-    <div class="card_title"><h5> @item.Product3.Name</h5></div>
-    <div class="card_body">
-    <div class="text-center">
-    <img src="@item.Product3.ImageFullPath" style="height:150px; max-width:250px;" />
-    </div>
-    <p class="mt-2">
-    @item.Product3.Description
-    <h3>@Html.DisplayFor(modelItem => item.Product3.Price)</h3>
-    </p>
-    </div>
-    <div class="card_foot">
-    <a asp-action="Details" asp-route-id="@item.Product3.Id" class="btn btn-sm btn-secondary">Details</a>
-    <a asp-action="Add" asp-route-id="@item.Product3.Id" class="btn btn-sm  btn-primary">Add to Cart</a>
-    </div>
-    </div>
-    </div>
-    }
-    @if (item.Product4 != null)
-    {
-    <div class="col-md-3">
-    <div class="card">
-    <div class="card_title"><h5> @item.Product4.Name</h5></div>
-    <div class="card_body">
-    <div class="text-center">
-    <img src="@item.Product4.ImageFullPath" style="height:150px; max-width:250px;" />
-    </div>
-    <p class="mt-2">
-    @item.Product4.Description
-    <h3>@Html.DisplayFor(modelItem => item.Product4.Price)</h3>
-    </p>
-    </div>
-    <div class="card_foot">
-    <a asp-action="Details" asp-route-id="@item.Product4.Id" class="btn btn-sm  btn-secondary">Details</a>
-    <a asp-action="Add" asp-route-id="@item.Product4.Id" class="btn btn-sm  btn-primary">Add to Cart</a>
-    </div>
-    </div>
-    </div>
-
-    }
-    </div>
-
-    }
-*@
+     
 
 @section Scripts {
-    @{
-    await Html.RenderPartialAsync("_ValidationScriptsPartial");
-}
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
 
 }
