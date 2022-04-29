@@ -16,7 +16,7 @@ namespace Shopping.Data.Entities
         public float Quantity { get; set; }
 
         [DataType(DataType.MultilineText)]
-        [Display(Name = "Coments")]
+        [Display(Name = "Comments")]
         public string Remarks { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:C2}")]

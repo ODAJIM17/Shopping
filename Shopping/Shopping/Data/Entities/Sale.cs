@@ -7,8 +7,14 @@ namespace Shopping.Data.Entities
     {
         public int Id { get; set; }
 
+        [Required]
+        [MaxLength(20, ErrorMessage = "Field {0} allows max {1} characters")]
+        [Display(Name = "Order No")]
+        public string OrderNo { get; set; }
+
+
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm tt}")]
-        [Display(Name = "Date")]
+        [Display(Name = "Order Date")]
         [Required(ErrorMessage = "{0} is required.")]
         public DateTime Date { get; set; }
 
@@ -18,7 +24,7 @@ namespace Shopping.Data.Entities
         [Display(Name = "Comments")]
         public string? Remarks { get; set; }
 
-        [Display(Name = "Estatus")]
+        [Display(Name = "Order Status")]
         public OrderStatus OrderStatus { get; set; }
 
         public ICollection<SaleDetail> SaleDetails { get; set; }

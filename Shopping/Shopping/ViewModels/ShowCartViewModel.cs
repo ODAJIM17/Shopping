@@ -5,6 +5,7 @@ namespace Shopping.ViewModels
 {
     public class ShowCartViewModel
     {
+        public string OrderNo { get; set; }
         public User User { get; set; }
 
         [DataType(DataType.MultilineText)]

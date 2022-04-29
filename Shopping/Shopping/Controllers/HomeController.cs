@@ -203,12 +203,16 @@ namespace Shopping.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ShowCart(ShowCartViewModel model)
         {
-            User user = await _userHelper.GetUserAsync(User.Identity.Name);
+           
+            //var confirmationNumber = long.Parse(DateTime.Now.ToString("yyyyMMddHHmmss"));
+
+           User user = await _userHelper.GetUserAsync(User.Identity.Name);
             if (user == null)
             {
                 return NotFound();
             }
 
+           // model.OrderNo = confirmationNumber.ToString();
             model.User = user;
             model.TemporalSales = await _context.TemporalSales
                 .Include(ts => ts.Product)

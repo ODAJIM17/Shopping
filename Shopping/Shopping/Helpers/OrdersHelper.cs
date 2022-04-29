@@ -22,9 +22,10 @@ namespace Shopping.Helpers
             {
                 return response;
             }
-
+            var confirmationNumber = long.Parse(DateTime.Now.ToString("yyyyMMddHHmmss"));
             Sale sale = new()
             {
+                OrderNo = confirmationNumber.ToString(),
                 Date = DateTime.UtcNow,
                 User = model.User,
                 Remarks = model.Remarks,

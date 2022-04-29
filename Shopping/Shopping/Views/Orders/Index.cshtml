@@ -5,17 +5,19 @@
 }
 
 
-
 <div class="row">
     <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Pedidos</h3>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="panel-title"><i class="fa fa-gifts text-danger"></i> New Orders List</h5>
             </div>
-            <div class="panel-body">
-                <table class="table table-hover table-responsive table-striped" id="OrderTable">
+            <div class="card-body">
+                <table class="table table-hover table-responsive table-striped smfnt" id="OrderTable">
                     <thead>
                         <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OrderNo)
+                            </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Date)
                             </th>
@@ -44,6 +46,9 @@
                         @foreach (var item in Model)
                         {
                             <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OrderNo)
+                                </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Date)
                                 </td>

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shopping.Data;
+using Shopping.Enums;
 using Shopping.Helpers;
 
 namespace Shopping.Controllers
@@ -39,6 +40,17 @@ namespace Shopping.Controllers
             else
             {
                 ViewBag.Product = 0;
+            }
+
+            //Get new orders count
+            var  ordersCount = _context.Sales.Where(s => s.OrderStatus == 0).Count();
+            if (ordersCount > 0)
+            {
+                ViewBag.NewOrders = ordersCount;
+            }
+            else
+            {
+                ViewBag.NewOrders = 0;
             }
 
            return View( await _context.TemporalSales

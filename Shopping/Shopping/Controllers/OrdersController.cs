@@ -45,5 +45,6 @@ namespace Shopping.Controllers
 
             return View(sale);
         }
+
     }
 }
