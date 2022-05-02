@@ -33,6 +33,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                         @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Orders" asp-action="MyOrders">My Orders</a>
+                            </li>
+                        }
                         @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {
                             <li class="nav-item dropdown">
@@ -49,34 +55,19 @@
 
                                 </ul>
                             </li>
-
-                            @* <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Categories" asp-action="Index">Categories</a>
-                                </li>
-                                <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Countries" asp-action="Index">Countries</a>
-                                </li>
-                                <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
-                                </li>
-                                <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
-                                </li>
-                                <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Products" asp-action="Index">Products</a>
-                                </li>*@
                         }
                     </ul>
+
                     <ul class="nav navbar-nav navbar-right">
+
                         @if (User.Identity.IsAuthenticated)
                         {
                             @if (ViewBag.Cart > 0)
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="ShowCart"><i class="fa fa-cart-shopping"></i> Cart <span class="badge bg-warning">@ViewBag.Cart</span></a>
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="ShowCart"><i class="fa fa-cart-shopping"></i> Check Cart <span class="badge bg-warning">@ViewBag.Cart</span></a>
                                 </li>
                             }
-
 
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="ChangeUser">@User.Identity.Name</a>

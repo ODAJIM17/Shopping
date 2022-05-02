@@ -9,6 +9,33 @@
     <h4 class="text-navy text-center">Your One Stop Shop Store</h4><br />
 </div>
 
+<div class="text-center mt-2">
+<h3>Shopping Categorías</h3>
+
+<div class="mb-2">
+    @foreach (var item in Model.Categories)
+    {
+        <span><strong> @item.Name&nbsp;&nbsp;</strong></span>
+    }
+</div></div>
+
+
+<div class="mb-2">
+    <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">Order by  Name</a>&nbsp;&nbsp;
+    <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParm"]">Order by Price</a>
+</div>
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Search by name or category: <input type="text"  name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-warning" />
+            <a asp-action="Index" class="btn btn-success">View all Products</a>
+        </p>
+    </div>
+</form>
+
+
 @if (Model.Quantity > 0)
 {
     <a asp-action="ShowCart" class="btn btn-outline-danger" style="border-radius:15px">Check Cart (@Model.Quantity)</a>
@@ -46,6 +73,29 @@
     }
 </div>
      
+@{
+    var prevDisabled = !Model.Products.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Products.HasNextPage ? "disabled" : "";
+}
+
+<div class="text-center">
+<div class="mt-5">
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.Products.PageIndex - 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-warning @prevDisabled">
+        Previous Page
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.Products.PageIndex + 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-success @nextDisabled">
+        Next Page
+    </a>
+</div>
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -28,7 +28,7 @@ namespace Shopping.Controllers
             }
             else
             {
-                ViewBag.User = 0;
+                ViewBag.UserCount = 0;
             }
 
             //Get productcount
@@ -39,7 +39,7 @@ namespace Shopping.Controllers
             }
             else
             {
-                ViewBag.Product = 0;
+                ViewBag.ProductCount = 0;
             }
 
             //Get new orders count

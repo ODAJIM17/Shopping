@@ -3,29 +3,17 @@
 @{
     ViewData["Title"] = "Details";
 }
-<Flash dismissable="true" />
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-6">
-           <h5>Order Details for @Model.User.FullName</h5>
-        </div>
-         <div class="col-sm-6">
-            <h5> Order Number: @Model.OrderNo</h5>
-        </div>
-    </div>
-</div>
 
+<flash dismissable="true" />
 
-<div class="container">
-    <partial name="_OrderDetails" />    
+<h4>Order Details</h4>
+
+<div>
+    <partial name="_OrderDetails" />
 </div>
 
 <div>
-    <a asp-action="Dispatch" asp-route-id="@Model?.Id" class="btn btn-outline-primary">Proccess Order</a>
-    <a asp-action="Send" asp-route-id="@Model?.Id" class="btn btn-outline-secondary">Send Order</a>
-    <a asp-action="Confirm" asp-route-id="@Model?.Id" class="btn btn-outline-warning">Confirm Order</a>
-    <a asp-action="Cancel" asp-route-id="@Model?.Id" class="btn btn-outline-danger">Cancel Order</a>
-    <a asp-action="Index" class="btn btn-outline-success">Regresar</a>
+    <a asp-action="MyOrders" class="btn btn-sm btn-outline-success">Back to My Orders</a>
 </div>
 
 
@@ -35,10 +23,10 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title">Products</h5>
+                <h3 class="card-title">Products</h3>
             </div>
             <div class="card-body">
-                <table class="table table-hover table-responsive table-striped" id="MyTable">
+                <table class="table table-hover table-responsive table-striped" id="DetailTable">
                     <thead>
                         <tr>
                             <th>
@@ -95,19 +83,22 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#MyTable').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/English.json"
-                },
-                "aLengthMenu": [
-                    [25, 50, 100, 200, -1],
-                    [25, 50, 100, 200, "All"]
-                ]
-            });
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#DetailTable').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/English.json"
+            },
+            "aLengthMenu": [
+                [25, 50, 100, 200, -1],
+                [25, 50, 100, 200, "All"]
+            ]
         });
-    </script>
+    });
+</script>
 }

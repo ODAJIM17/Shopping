@@ -34,16 +34,66 @@ namespace Shopping.Controllers
         }
 
         // for insrtuctions about toast go to this link https://codewithmukesh.com/blog/toast-notifications-in-aspnet-core/#Install_the_Package
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
-            List<Product> products = await _context.Products
-                 .Include(p => p.ProductImages)
-                 .Include(p => p.ProductCategories)
-                 .Where(p => p.Stock > 0)
-                 .OrderBy(p => p.Description)
-                 .ToListAsync();
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "NameDesc" : "";
+            ViewData["PriceSortParm"] = sortOrder == "Price" ? "PriceDesc" : "Price";
 
-            HomeViewModel model = new() { Products = products };
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+
+            IQueryable<Product> query = _context.Products
+              .Include(p => p.ProductImages)
+              .Include(p => p.ProductCategories)
+              .ThenInclude(pc => pc.Category);
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                query = query.Where(p => (p.Name.ToLower().Contains(searchString.ToLower()) ||
+                                            p.ProductCategories.Any(pc => pc.Category.Name.ToLower()
+                                            .Contains(searchString.ToLower()))) &&
+                                            p.Stock > 0);
+            }
+            else
+            {
+                query = query.Where(p => p.Stock > 0);
+            }
+
+
+            switch (sortOrder)
+            {
+                case "NameDesc":
+                    query = query.OrderByDescending(p => p.Name);
+                    break;
+                case "Price":
+                    query = query.OrderBy(p => p.Price);
+                    break;
+                case "PriceDesc":
+                    query = query.OrderByDescending(p => p.Price);
+                    break;
+                default:
+                    query = query.OrderBy(p => p.Name);
+                    break;
+            }
+
+            int pageSize = 8;
+
+            HomeViewModel model = new() 
+            {
+                Products = await PaginatedList<Product>.CreateAsync(query, pageNumber ?? 1, pageSize),
+                Categories = await _context.Categories.ToListAsync(),
+            };
+
             User user = await _userHelper.GetUserAsync(User.Identity.Name);
             if (user != null)
             {
@@ -204,7 +254,6 @@ namespace Shopping.Controllers
         public async Task<IActionResult> ShowCart(ShowCartViewModel model)
         {
            
-            //var confirmationNumber = long.Parse(DateTime.Now.ToString("yyyyMMddHHmmss"));
 
            User user = await _userHelper.GetUserAsync(User.Identity.Name);
             if (user == null)
@@ -212,7 +261,6 @@ namespace Shopping.Controllers
                 return NotFound();
             }
 
-           // model.OrderNo = confirmationNumber.ToString();
             model.User = user;
             model.TemporalSales = await _context.TemporalSales
                 .Include(ts => ts.Product)
