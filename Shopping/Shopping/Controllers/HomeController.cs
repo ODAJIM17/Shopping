@@ -33,7 +33,7 @@ namespace Shopping.Controllers
             _ordersHelper = ordersHelper;
         }
 
-        // for insrtuctions about toast go to this link https://codewithmukesh.com/blog/toast-notifications-in-aspnet-core/#Install_the_Package
+        // for instructions about toast go to this link https://codewithmukesh.com/blog/toast-notifications-in-aspnet-core/#Install_the_Package
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
             ViewData["CurrentSort"] = sortOrder;
@@ -138,17 +138,34 @@ namespace Shopping.Controllers
                 return NotFound();
             }
 
-            TemporalSale temporalSale = new()
-            {
-                Product = product,
-                Quantity = 1,
-                User = user
-            };
+            //Check if the item is already in the shopping cart. If it is just add 1 to the Qty
+            var orderDetailTemp = await _context.TemporalSales
+                .Where(ts => ts.User.Id == user.Id && ts.Product.Id == id)
+                .FirstOrDefaultAsync();
 
-            _context.TemporalSales.Add(temporalSale);
+            if (orderDetailTemp != null)
+            {
+                orderDetailTemp.Quantity += 1;
+                _context.TemporalSales.Update(orderDetailTemp);
+                _notyf.Success(orderDetailTemp.Product.Name + " has been added successfully");
+            }
+            else
+            {
+                 TemporalSale temporalSale = new()
+                {
+                    Product = product,
+                    Quantity = 1,
+                    User = user
+                };
+
+                _context.TemporalSales.Add(temporalSale);
+                _notyf.Success(temporalSale.Product.Name + " has been added successfully");
+               
+            }
+
             await _context.SaveChangesAsync();
-            _notyf.Success(temporalSale.Product.Name + " has been added successfully");
             return RedirectToAction(nameof(Index));
+
         }
 
 
@@ -212,18 +229,40 @@ namespace Shopping.Controllers
                 return NotFound();
             }
 
-            TemporalSale temporalSale = new()
+            //Check if the item is already in the shopping cart. If it is just add 1 to the Qty
+            var orderDetailTemp = await _context.TemporalSales
+                .Where(ts => ts.User.Id == user.Id && ts.Product.Id == model.Id)
+                .FirstOrDefaultAsync();
+
+            if (orderDetailTemp != null)
             {
-                Product = product,
-                Quantity = model.Quantity,
-                Remarks = model.Remarks,
-                User = user
+                orderDetailTemp.Quantity += model.Quantity; 
+                _context.TemporalSales.Update(orderDetailTemp);
+                _notyf.Success(orderDetailTemp.Product.Name + " has been added successfully");
+
+            }
+            else
+            {
+                // client is adding a new item
+                TemporalSale temporalSale = new()
+                {
+                    Product = product,
+                    Quantity = model.Quantity,
+                    Remarks = model.Remarks,
+                    User = user                
             };
 
-            _context.TemporalSales.Add(temporalSale);
+                _context.TemporalSales.Add(temporalSale);
+                _notyf.Success(temporalSale.Product.Name + " has been added successfully");
+
+            }
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+
+
 
         [Authorize]
         public async Task<IActionResult> ShowCart()

@@ -70,7 +70,7 @@ void SeedData(WebApplication app)
 
     using (IServiceScope scope = scopedFactory.CreateScope())
     {
-        SeedDb? service = scope.ServiceProvider.GetService<SeedDb>();
+        SeedDb service = scope.ServiceProvider.GetService<SeedDb>();
         service.SeedAsync().Wait();
     }
 }

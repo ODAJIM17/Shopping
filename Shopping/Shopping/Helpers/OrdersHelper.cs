@@ -10,11 +10,14 @@ namespace Shopping.Helpers
     public class OrdersHelper : IOrdersHelper
     {
         private readonly DataContext _context;
+        private readonly IUserHelper _userHelper;
 
-        public OrdersHelper(DataContext context)
+        public OrdersHelper(DataContext context, IUserHelper userHelper )
         {
             _context = context;
+            _userHelper = userHelper;
         }
+
 
         public async Task<Response> CancelOrderAsync(int id)
         {
