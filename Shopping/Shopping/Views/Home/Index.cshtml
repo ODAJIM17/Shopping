@@ -6,18 +6,19 @@
 
 <div class="container-fluid bg-light text-center">
     <img src="~/Images/Dinos3D2.png" height="150px" />
-    <h4 class="text-navy text-center">Your One Stop Shop Store</h4><br />
+    <h5 class="text-navy text-center">Your One Stop Shop Store</h5><br />
 </div>
 
 <div class="text-center mt-2">
-    <h3>Shopping Categoríes</h3>
+    <h5>SHOPPING CATEGORIES</h5>
 
     <div class="mb-2">
         @foreach (var item in Model.Categories)
         {
+            //Antes
           @*  <span><strong> @item.Name &nbsp;&nbsp;</strong></span>*@
-         
-          <span> <a href="@Url.Action("GetCategories", "Home", new { category = item.Name})" > @item.Name&nbsp;&nbsp;</a></span> 
+         // Despues
+          <span> <a href="@Url.Action("Index", "Home", new { searchString = item.Name})" ><strong> @item.Name&nbsp;</strong></a></span> 
     
         }
     </div>
@@ -32,18 +33,19 @@
 <form asp-action="Index" method="get">
     <div class="form-actions no-color">
         <p>
-            Search by name or category: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
-            <input type="submit" value="Search" class="btn btn-warning" />
-            <a asp-action="Index" class="btn btn-success">View all Products</a>
+            Search by product name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-sm btn-warning" style="border-radius:15px" />
+            <a asp-action="Index" class="btn btn-sm btn-success" style="border-radius:15px">View all Products</a>
         </p>
     </div>
 </form>
 
 
-@if (Model.Quantity > 0)
+@*@if (Model.Quantity > 0)
+
 {
     <a asp-action="ShowCart" class="btn btn-outline-danger" style="border-radius:15px">Check Cart (@Model.Quantity)</a>
-}
+}*@
 
 <div class="row row-cols-1 row-cols-md-4 g-4 mt-3">
 
@@ -112,14 +114,14 @@
            asp-route-sortOrder="@ViewData["CurrentSort"]"
            asp-route-pageNumber="@(Model.Products.PageIndex - 1)"
            asp-route-currentFilter="@ViewData["CurrentFilter"]"
-           class="btn btn-warning @prevDisabled">
+           class="btn btn-sm btn-warning @prevDisabled" style="border-radius:15px">
             Previous Page
         </a>
         <a asp-action="Index"
            asp-route-sortOrder="@ViewData["CurrentSort"]"
            asp-route-pageNumber="@(Model.Products.PageIndex + 1)"
            asp-route-currentFilter="@ViewData["CurrentFilter"]"
-           class="btn btn-success @nextDisabled">
+           class="btn btn-sm btn-success @nextDisabled" style="border-radius:15px">
             Next Page
         </a>
     </div>

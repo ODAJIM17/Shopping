@@ -70,6 +70,10 @@ body {
     background-color: #004795;
 }
 
+.bg-red {
+    background-color: #ac1f2b
+}
+
 .smfnt {
     font-family: Tahoma;
     font-size: 12px;
