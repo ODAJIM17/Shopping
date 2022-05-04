@@ -50,6 +50,7 @@ namespace Shopping.Controllers
                 .ThenInclude(sd => sd.Product)
                 .ThenInclude(p => p.ProductImages)
                 .FirstOrDefaultAsync(s => s.Id == id);
+
             if (sale == null)
             {
                 return NotFound();

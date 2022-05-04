@@ -112,7 +112,10 @@ namespace Shopping.Controllers
 
         }
 
-
+        public IActionResult GetCategories( string category)
+        {
+            return View();
+        }
         public async Task<IActionResult> Add(int? id)
         {
             if (id == null)
@@ -293,8 +296,8 @@ namespace Shopping.Controllers
         public async Task<IActionResult> ShowCart(ShowCartViewModel model)
         {
            
-
            User user = await _userHelper.GetUserAsync(User.Identity.Name);
+
             if (user == null)
             {
                 return NotFound();
@@ -307,9 +310,12 @@ namespace Shopping.Controllers
                 .Where(ts => ts.User.Id == user.Id)
                 .ToListAsync();
 
+           
+
             Response response = await _ordersHelper.ProcessOrderAsync(model);
+ 
             if (response.IsSuccess)
-            {
+            {   
                 return RedirectToAction(nameof(OrderSuccess));
             }
 
@@ -436,7 +442,7 @@ namespace Shopping.Controllers
 
         [Authorize]
         public IActionResult OrderSuccess()
-        {
+        {  
             return View();
         }
 

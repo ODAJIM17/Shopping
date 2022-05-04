@@ -11,5 +11,10 @@ namespace Shopping.Data.Entities
         [Required(ErrorMessage = "Field {0} is required.")]
         public string Name { get; set; }
 
+        public ICollection<ProductCategory> ProductCategories { get; set; }
+
+        [Display(Name = "# Productos")]
+        public int ProductsNumber => ProductCategories == null ? 0 : ProductCategories.Count();
+
     }
 }

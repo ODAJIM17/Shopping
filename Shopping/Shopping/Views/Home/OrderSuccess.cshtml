@@ -1,16 +1,22 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Order Success";
 }
 
 
 <div class="row">
-    <div class="col-md-4 offset-4">
-        <img src="~/images/iconcart.png" style="width:400px;"/>
-        <h2>Thank You!</h2>
-        <h4>Su pedido fue registrado en nuestro sistema, pronto uno de nuestros asesores se comunicará con usted.</h4>
-        <h4>Your order was successfully submited, If you have any question, please call us at this number (305) 987-1234.</h4>
-        <a asp-action="Index" class="mt-2 btn btn-outline-success">Back</a>
+    <div class="col-sm-4">
+        <img src="~/images/iconcart.png" style="width:250px;" />
     </div>
-</div>
+   
+    <div class="col-sm-8 mt-5">
+        
+         <div class="text-center">
+        <h2 class="text-muted">Thank You!</h2>
+        <h5>Here is your order confirmation number: @ViewBag.OrderNumber</h5>
+        <h5>Your order was successfully submited, If you have any question, please call us at this number (305) 987-1234.</h5>
+        <a asp-action="Index" class="mt-2 btn  btn-warning text-black"><strong>BACK TO SITE</strong></a>
+    </div>
+    </div>
+   </div>
+
 

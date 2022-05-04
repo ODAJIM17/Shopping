@@ -47,7 +47,9 @@ namespace Shopping.Helpers
             {
                 return response;
             }
+
             var confirmationNumber = long.Parse(DateTime.Now.ToString("yyyyMMddHHmmss"));
+            
             Sale sale = new()
             {
                 OrderNo = confirmationNumber.ToString(),
@@ -56,6 +58,7 @@ namespace Shopping.Helpers
                 Remarks = model.Remarks,
                 SaleDetails = new List<SaleDetail>(),
                 OrderStatus = OrderStatus.New
+               
             };
 
             foreach (TemporalSale item in model.TemporalSales)
