@@ -98,6 +98,15 @@ namespace Shopping.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResendToken(ResendTokenViewModel model)
         {
+            string MailBody = "<!DOCTYPE html>" +
+                                "<html> " +
+                                    "<body style=\"background -color:#ff7f26;text-align:center;\"> " +
+                                    "<h1 style=\"color:#051a80;\">Welcome Dino Shopping Store</h1> " +
+                                    "<h2 style=\"color:#fff;\">Please click the link below in order to confirm your registration.</h2> " +
+                                    "<label style=\"color:orange;font-size:100px;border:5px dotted;border-radius:50px\">Link</label> " +
+                                    "</body> " +
+                                "</html>";
+
             if (ModelState.IsValid)
             {
                
@@ -120,10 +129,10 @@ namespace Shopping.Controllers
                 Response response = _mailHelper.SendMail(
                     $"{model.FirstName} {model.LastName}",
                     model.Username,
-                    "Shopping - Email Confirmation",
-                    $"<h3>Shopping - Email confirmation</h1>" +
-                        $"To confirm your email, please click the link:, " +
-                        $"<hr/><br/><p><a href = \"{tokenLink}\">Confirm Email</a></p>");
+                "Shopping - Email Confirmation",
+                $"<h3>Shopping - Email confirmation</h1>" +
+                    $"To confirm your email, please click the link:, " +
+                    $"<hr/><br/><p><a href = \"{tokenLink}\">Confirm Email</a></p>");
                 if (response.IsSuccess)
                 {
                     

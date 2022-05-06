@@ -1,4 +1,5 @@
 ﻿@model Shopping.ViewModels.HomeViewModel
+ 
 
 @{
     ViewData["Title"] = "Home Page";
@@ -15,11 +16,11 @@
     <div class="mb-2">
         @foreach (var item in Model.Categories)
         {
-            //Antes
-          @*  <span><strong> @item.Name &nbsp;&nbsp;</strong></span>*@
-         // Despues
-          <span> <a href="@Url.Action("Index", "Home", new { searchString = item.Name})" ><strong> @item.Name&nbsp;</strong></a></span> 
-    
+        //Antes
+            @*  <span><strong> @item.Name &nbsp;&nbsp;</strong></span>*@
+            // Despues
+            <span> <a style="font-size: large; font-style: normal" href="@Url.Action("Index", "Home", new { searchString = item.Name})"><strong> @item.Name&nbsp;</strong></a></span>
+
         }
     </div>
 </div>
@@ -43,9 +44,9 @@
 
 @*@if (Model.Quantity > 0)
 
-{
+    {
     <a asp-action="ShowCart" class="btn btn-outline-danger" style="border-radius:15px">Check Cart (@Model.Quantity)</a>
-}*@
+    }*@
 
 <div class="row row-cols-1 row-cols-md-4 g-4 mt-3">
 
@@ -58,7 +59,7 @@
                     <div class="text-center">
                         <p> <h5 class="card-title text-navy"> @item.Name</h5></p>
                         <div class="zoom">
-                            <img src="@item.ImageFullPath" style="height:150px; max-width:150px;" />
+                            <img id="myImg" src="@item.ImageFullPath" style="height:150px; max-width:150px;" />
                         </div>
                     </div>
                     <div class="card-body">
@@ -99,7 +100,9 @@
     }
     else
     {
-        <h3>No products found with your search</h3>
+        <div>
+            <h3>No products found with your search</h3>
+        </div>
     }
 </div>
 
@@ -127,10 +130,41 @@
     </div>
 </div>
 
+<!-- The Modal -->
+<div id="myModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="modal-img">
+    <div id="caption"></div>
+</div>
+
 @section Scripts {
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
+
+<script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+    var modalImg = document.getElementById("modal-img");
+    var captionText = document.getElementById("caption");
+
+    document.addEventListener("click", (e) => {
+      const elem = e.target;
+      if (elem.id==="myImg") {
+        modal.style.display = "block";
+        modalImg.src = elem.dataset.biggerSrc || elem.src;
+        captionText.innerHTML = elem.alt;
+      }
+    })
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+</script>
 
 
 }
