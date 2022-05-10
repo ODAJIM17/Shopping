@@ -6,27 +6,25 @@
 
 <flash dismissable="true" />
 
-<h4>Order Details</h4>
 
-<div>
-    <partial name="_OrderDetails" />
+<div class="card">
+    <h6 class="card-header">ORDER No: @Model.OrderNo
+         <a asp-action="MyOrders" class="btn btn-sm btn-default offset-8" style="border-radius:15px">Back to My Orders</a>
+  </h6>
+    <div class="card-body">
+        <partial name="_OrderDetails" />
+    </div>  
 </div>
 
-<div>
-    <a asp-action="MyOrders" class="btn btn-sm btn-outline-success">Back to My Orders</a>
-</div>
 
-
-<hr />
-
-<div class="row">
+<div class="row mt-2">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Products</h3>
+                <h5 class="card-title">Products</h5>
             </div>
             <div class="card-body">
-                <table class="table table-hover table-responsive table-striped" id="DetailTable">
+                <table class="table table-hover table-responsive table-striped smfnt" id="DetailTable">
                     <thead>
                         <tr>
                             <th>
@@ -70,7 +68,7 @@
                                 </td>
                                 <td>
                                     <div class="zoom">
-                                        <img src="@item.Product.ImageFullPath" style="width:100px;" />
+                                        <img src="@item.Product.ImageFullPath" style="width:60px;" />
                                     </div>
                                 </td>
                             </tr>

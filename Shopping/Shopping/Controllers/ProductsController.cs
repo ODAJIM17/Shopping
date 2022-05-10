@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using CoreModal.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shopping.Data;
 using Shopping.Data.Entities;
 using Shopping.Helpers;
 using Shopping.ViewModels;
+using Vereyon.Web;
+using static CoreModal.Helpers.ModalHelper;
 
 namespace Shopping.Controllers
 {
@@ -14,12 +17,14 @@ namespace Shopping.Controllers
         private readonly DataContext _context;
         private readonly ICombosHelper _combosHelper;
         private readonly IBlobHelper _blobHelper;
-        public ProductsController(DataContext context, ICombosHelper combosHelper, IBlobHelper blobHelper)
+        private readonly IFlashMessage _flashMessage;
+
+        public ProductsController(DataContext context, ICombosHelper combosHelper, IBlobHelper blobHelper, IFlashMessage flashMessage)
         {
             _context = context;
             _combosHelper = combosHelper;
             _blobHelper = blobHelper;
-
+            _flashMessage = flashMessage;
         }
         public async Task<IActionResult> Index()
         {
@@ -30,6 +35,7 @@ namespace Shopping.Controllers
                 .ToListAsync());
         }
 
+        [NoDirectAccess]
         public async Task<IActionResult> Create()
         {
             CreateProductViewModel model = new()
@@ -80,7 +86,16 @@ namespace Shopping.Controllers
                 {
                     _context.Add(product);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    _flashMessage.Confirmation("Registro creado.");
+                    return Json(new
+                    {
+                        isValid = true,
+                        html = ModalHelper.RenderRazorViewToString(this, "_ViewAllProducts", _context.Products
+                        .Include(p => p.ProductImages)
+                        .Include(p => p.ProductCategories)
+                        .ThenInclude(pc => pc.Category).ToList())
+                    });
+
                 }
                 catch (DbUpdateException dbUpdateException)
                 {
@@ -100,11 +115,13 @@ namespace Shopping.Controllers
             }
 
             model.Categories = await _combosHelper.GetComboCategoriesAsync();
-            return View(model);
+            return Json(new { isValid = false, html = ModalHelper.RenderRazorViewToString(this, "Create", model) });
+
         }
 
 
         //Edit products
+        [NoDirectAccess]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -148,7 +165,16 @@ namespace Shopping.Controllers
                 product.Stock = model.Stock;
                 _context.Update(product);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                _flashMessage.Confirmation("Record updated.");
+                return Json(new
+                {
+                    isValid = true,
+                    html = ModalHelper.RenderRazorViewToString(this, "_ViewAllProducts", _context.Products
+                    .Include(p => p.ProductImages)
+                    .Include(p => p.ProductCategories)
+                    .ThenInclude(pc => pc.Category).ToList())
+                });
+
             }
             catch (DbUpdateException dbUpdateException)
             {
@@ -166,7 +192,8 @@ namespace Shopping.Controllers
                 ModelState.AddModelError(string.Empty, exception.Message);
             }
 
-            return View(model);
+            return Json(new { isValid = false, html = ModalHelper.RenderRazorViewToString(this, "Edit", model) });
+
         }
 
 
@@ -362,13 +389,9 @@ namespace Shopping.Controllers
 
 
         //Delete a product
-        public async Task<IActionResult> Delete(int? id)
+        [NoDirectAccess]
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             Product product = await _context.Products
                 .Include(p => p.ProductCategories)
                 .Include(p => p.ProductImages)
@@ -378,28 +401,17 @@ namespace Shopping.Controllers
                 return NotFound();
             }
 
-            return View(product);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(Product model)
-        {
-            Product product = await _context.Products
-                .Include(p => p.ProductImages)
-                .Include(p => p.ProductCategories)
-                .FirstOrDefaultAsync(p => p.Id == model.Id);
-
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
-
             foreach (ProductImage productImage in product.ProductImages)
             {
                 await _blobHelper.DeleteBlobAsync(productImage.ImageId, "products");
             }
 
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
+            _flashMessage.Info("Record deleted.");
             return RedirectToAction(nameof(Index));
         }
+
 
     }
 }

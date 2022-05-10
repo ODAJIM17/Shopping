@@ -22,7 +22,7 @@ namespace Shopping.Data.Entities
 
         [DataType(DataType.MultilineText)]
         [Display(Name = "Comments")]
-        public string? Remarks { get; set; }
+        public string Remarks { get; set; }
 
         [Display(Name = "Order Status")]
         public OrderStatus OrderStatus { get; set; }

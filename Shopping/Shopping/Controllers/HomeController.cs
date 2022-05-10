@@ -265,8 +265,6 @@ namespace Shopping.Controllers
         }
 
 
-
-
         [Authorize]
         public async Task<IActionResult> ShowCart()
         {
@@ -287,6 +285,9 @@ namespace Shopping.Controllers
                 User = user,
                 TemporalSales = temporalSales,
             };
+
+             //Capture the qty
+            ViewBag.Cart = model.Quantity;
 
             return View(model);
         }
@@ -461,7 +462,7 @@ namespace Shopping.Controllers
         [Route("error/404")]
         public IActionResult Error404()
         {
-            _notyf.Error("OOps!. Page not found", 3);
+           // _notyf.Error("OOps!. Page not found", 3);
             return View();
         }
     }

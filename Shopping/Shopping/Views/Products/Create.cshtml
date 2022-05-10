@@ -1,31 +1,25 @@
 ﻿@model Shopping.ViewModels.CreateProductViewModel
+
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Producto";
+    Layout = null;
 }
 
-<div class="container-fluid">
-    <div class="card">
-        <div class="card-header">
-           <h5> <i class="fa fa-gifts text-danger"></i> Products</h5>
-        </div>
-        <div class="card-body">
-            <div class="row">
-    <div class="col-md-12">
-        <form asp-action="Create" enctype="multipart/form-data">
+<flash dismissable="true" />
+
+<div class="container smfont">
+    <form asp-action="Create" enctype="multipart/form-data" autocomplete="off" asp-route-id="@Model.Id" onsubmit="return jQueryAjaxPost(this);">
+        <div class="box-body">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Categories" />
             <partial name="_CreateProduct"/>
-            <div class="form-group mt-2">
-                 <button type="submit" value="Save" class="btn btn-sm btn-default"><i class="fa fa-save fa-solid text-danger"></i> Save</button>
-                <a asp-action="Index" class="btn btn-sm btn-default"><i class="fa fa-recycle text-danger"></i> Back to List</a>
-            </div>
-        </form>
-    </div>
-</div>
         </div>
-    </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal"><i class="fa fa-ban"></i> Cancel</button>
+            <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Save</button>
+        </div>
+    </form>
 </div>
-
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

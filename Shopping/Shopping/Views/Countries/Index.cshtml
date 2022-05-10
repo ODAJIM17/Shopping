@@ -4,73 +4,45 @@
     ViewData["Title"] = "Index";
 }
 
+<flash dismissable="true" />
 
+<!-- Content Wrapper. Contains page content -->
 <div class="container-fluid">
-    <div class=card>
-        <div class="card-header">
-          <h5>  <i class="fa fa-earth-americas text-navy"></i> Countries List</h5> 
+    <div class="card mt-2">
+        <div class="card-header text-danger">
+            <i class="fa fa-globe"></i>  <strong>Countries</strong>
         </div>
         <div class="card-body">
-            <table class="table table-hover table-striped smfnt" id="TableCountry">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Name)
-                        </th>
-                        <th class="text-center">
-                            @Html.DisplayNameFor(model => model.StatesCount)
-                        </th>
-                        <th> <a asp-action="Create" class="btn btn-sm btn-default"><i class="fa-solid fa-circle-plus text-navy"></i> Create New</a></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Name)
-                            </td>
-                            <td class="text-center">
-                                @Html.DisplayFor(modelItem => item.StatesCount)
-                            </td>
-                            <td>
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-default"><i class="fa-solid fa-edit text-navy"></i> Edit</a>
-                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-default"><i class="fa-solid fa-list text-navy"></i> Details</a>
-                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-default"><i class="fa-solid fa-trash-alt text-danger"></i> Delete</a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+            <div id="view-all">
+                @await Html.PartialAsync("_ViewAllCountries", Model)
+            </div>
         </div>
     </div>
 </div>
 
-
+<partial name="_AddOrEditDialogSmall" />
+<partial name="_DeleteDialog" />
 
 @section Scripts {
-    @{
-    await Html.RenderPartialAsync("_ValidationScriptsPartial");
-}
-    @* <script src="/js/deleteDialog.js"></script>*@
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
+    <script src="~/js/showmodal.js"></script>
 
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#TableCountry').DataTable({
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/English.json"
-            },
-            "aLengthMenu": [
-                [25, 50, 100, 200, -1],
-                [25, 50, 100, 200, "All"]
-            ]
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#CountriesTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/English.json"
+                },
+                "aLengthMenu": [
+                    [25, 50, 100, 200, -1],
+                    [25, 50, 100, 200, "All"]
+                ]
+            });
         });
+    </script>
 
-        // Delete item
-       // sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Brands/Delete/', false);
-    });
-</script>
-
-    }
+    <script>
+        sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Countries/Delete/', false);
+    </script>
+}

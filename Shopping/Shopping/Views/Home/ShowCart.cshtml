@@ -36,8 +36,8 @@
                 </div>
                 <div class="form-group mt-2">
                    @* <input type="submit" value="Confirmar Pedido" class="btn btn-outline-primary" />*@
-                    <button type="submit" class="btn btn-outline-primary"><i class="fa fa-check"></i> Submit Order</button>
-                    <a asp-action="Index" class="btn btn-outline-success"><i class="fa fa-cart-plus"></i> Continue Shopping</a>
+                    <button type="submit" class="btn btn-sm btn-warning" style="border-radius:15px"><i class="fa fa-check"></i> Submit Order</button>
+                    <a asp-action="Index" class="btn btn-sm btn-success" style="border-radius:15px"><i class="fa fa-cart-plus"></i> Continue Shopping</a>
                 </div>
             </form>
         </div>
@@ -87,7 +87,7 @@
                             <tr>
                                 <td>
                                     <div class="zoom">
-                                        <img src="@item.Product.ImageFullPath" style="width:80px;" />
+                                        <img src="@item.Product.ImageFullPath" style="width:50px;" />
                                     </div>
                                 </td>
                                 <td>
@@ -100,13 +100,13 @@
                                     @Html.DisplayFor(modelItem => item.Product.Price)
                                 </td>
                                 <td>
-                                    <a asp-action="DecreaseQuantity" asp-route-id="@item.Id" class="btn btn-secondary">-</a>
+                                    <a asp-action="DecreaseQuantity" asp-route-id="@item.Id" class="btn btn-sm btn-secondary">-</a>
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Quantity)
                                 </td>
                                 <td>
-                                    <a asp-action="IncreaseQuantity" asp-route-id="@item.Id" class="btn btn-primary">+</a>
+                                    <a asp-action="IncreaseQuantity" asp-route-id="@item.Id" class="btn btn-sm btn-primary">+</a>
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Value)

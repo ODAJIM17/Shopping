@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
     <link rel="stylesheet" href="~/lib/datatables/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="~/lib/jqueryui/jquery-ui.min.css" />
-    <link rel="stylesheet" href="~/css/modalImage.css" />
+    
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Shopping.styles.css" asp-append-version="true" />
 </head>
@@ -64,10 +64,10 @@
 
                         @if (User.Identity.IsAuthenticated)
                         {
-                            @if (ViewBag.Cart > 0)
+                            @if (ViewBag.Cart != null)
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="ShowCart"><i class="fa fa-cart-shopping"></i> Check Cart <span class="badge bg-warning">@ViewBag.Cart</span></a>
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="ShowCart"><i class="fa fa-cart-shopping"></i> Items <span class="badge bg-warning">@ViewBag.Cart</span></a>
                                 </li>
                             }
 

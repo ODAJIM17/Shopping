@@ -209,10 +209,13 @@ namespace Shopping.Controllers
                 .Include(s => s.SaleDetails)
                 .ThenInclude(sd => sd.Product)
                 .ThenInclude(p => p.ProductImages)
-                .FirstOrDefaultAsync(s => s.Id == id);
+                .FirstOrDefaultAsync(s => s.Id == id  && s.User.UserName == User.Identity.Name);
+
             if (sale == null)
             {
+                _notyf.Error("You are not allowed to view this record");
                 return NotFound();
+               
             }
 
             return View(sale);

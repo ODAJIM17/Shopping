@@ -4,86 +4,60 @@
     ViewData["Title"] = "Details";
 }
 
- 
-<div class="container-fluid bg-light">
-   
-    <partial name="_CountryDetails" />
-    </div>
+<flash dismissable="true" />
+
+<div class="container bg-light">
+    <h5>Country Details</h5>
+
     <div>
-       
-        <a asp-action="AddState" class="btn btn-sm btn-default" asp-route-id="@Model?.Id"><i class="fa-solid fa-plus-circle text-navy"></i> Add State</a>
-        <a asp-action="Edit" class="btn btn-sm btn-default" asp-route-id="@Model?.Id"><i class="fa-solid fa-sitemap text-navy"></i> Edit Country</a>
-        <a asp-action="Index" class="btn btn-sm btn-default"><i class="fa-solid fa-recycle text-navy"></i> Back to List</a>
+        <partial name="_CountryDetails" />
     </div>
 
+</div>
 
 
-<div class="container-fluid mt-2">
-    <div class="card border-primary">
-        <div class="card-header">
-            <i class="fas fa-map text-navy">  States List</i>
+    <div class="container">
+        <a asp-action="Index" class="btn btn-sm btn-outline-success"><i class="fa-solid fa-arrow-rotate-left"></i> Back to List</a>
+    </div>
+<!-- Content Wrapper. Contains page content -->
+<div class="container-fluid">
+    <div class="card mt-2">
+        <div class="card-header text-danger">
+            <i class="fa fa-globe"></i>  <strong>States</strong>
         </div>
         <div class="card-body">
-            <table class="table table-hover table-striped" id="TableState">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.States.FirstOrDefault().Name)
-                        </th>
-                        <th class="text-center">
-                            @Html.DisplayNameFor(model => model.States.FirstOrDefault().CitiesCount)
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.States)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Name)
-                            </td>
-                            <td class="text-center">
-                                @Html.DisplayFor(modelItem => item.CitiesCount)
-                            </td>
-                            <td>
-                                <a asp-action="EditState" asp-route-id="@item.Id" class="btn btn-sm btn-default"><i class="fa-solid fa-pen text-navy"></i> Edit</a>
-                                <a asp-action="DetailsState" asp-route-id="@item.Id" class="btn btn-sm btn-default"><i class="fa-solid fa-list text-primary"></i> Details</a>
-                                <a asp-action="DeleteState" asp-route-id="@item.Id" class="btn btn-sm btn-default"><i class="fa-solid fa-trash text-danger"></i> Delete</a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+            <div id="view-all">
+                @await Html.PartialAsync("_ViewAllStates", Model)
+            </div>
         </div>
     </div>
 </div>
 
-
+<partial name="_AddOrEditDialogSmall" />
+<partial name="_DeleteDialog" />
 
 @section Scripts {
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
-    @* <script src="/js/deleteDialog.js"></script>*@
 
-
+<script src="~/js/showmodal.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#TableState').DataTable({
+        $('#StatesTable').DataTable({
             "language": {
-                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/English.json"
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
             },
             "aLengthMenu": [
                 [25, 50, 100, 200, -1],
-                [25, 50, 100, 200, "All"]
+                [25, 50, 100, 200, "Todos"]
             ]
         });
-
-        // Delete item
-       // sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Brands/Delete/', false);
     });
 </script>
 
-    }
+<script>
+    sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Countries/DeleteState/', false);
+</script>
+}

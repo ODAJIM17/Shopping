@@ -1,25 +1,25 @@
 ﻿@model Shopping.ViewModels.CityViewModel
+
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "City";
+    Layout = null;
 }
 
+<flash dismissable="true" />
 
-<h4>City</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="AddCity" autocomplete="off">
+<div class="container smfont">
+    <form asp-action="AddCity" autocomplete="off" asp-route-id="@Model.Id" onsubmit="return jQueryAjaxPost(this);">
+        <div class="box-body">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="StateId" />
-           <partial name="_City"/>
-            <div class="form-group mt-2">
-                <input type="submit" value="Create" class="btn btn-sm btn-default" />
-                <a asp-action="DetailsState" asp-route-id="@Model.StateId" class="btn btn-sm btn-default"><i class="fa-solid fa-recycle text-navy"></i> Back to List</a>
-            </div>
-        </form>
-    </div>
+            <partial name="_City" />
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal"><i class="fa fa-ban"></i> Cancel</button>
+            <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Save</button>
+        </div>
+    </form>
 </div>
-
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
